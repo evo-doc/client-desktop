@@ -1,0 +1,23 @@
+{
+   // Root
+   "root": true,
+   // Parent Cofiguration
+   "extends": [
+      "eslint:recommended",
+      "airbnb-base"
+   ],
+   // Environments
+   "env": {
+      "es6": true,
+      "mocha": true,
+      "browser": true,
+      "node": true
+   },
+   // Project rules
+   "rules": {
+      "indent": [
+         "error",
+         3
+      ]
+   }
+}
