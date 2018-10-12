@@ -38,7 +38,12 @@
     "clean:build": "rm -rf ./build",
     "clean:docs": "rm -rf ./docs",
     "clean:release": "rm -rf ./release/**",
-    "clean:logs": "rm -rf ./logs/*.log"
+    "clean:logs": "rm -rf ./logs/*.log",
+    "_04a": "------------------------------------------------------------------------------------",
+    "_04b": "--- Testing",
+    "_04c": "------------------------------------------------------------------------------------",
+    "lint": "eslint .",
+    "test": "echo Test"
   },
   "dependencies": {
     "electron": "^3.0.2",

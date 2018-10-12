@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "sh ./bin/pre-commit.sh",
+    "pre-push": "sh ./bin/pre-push.sh"
+  }
+}
