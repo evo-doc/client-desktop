@@ -1,0 +1,13 @@
+body {
+   margin: 0;
+   padding: 0;
+   user-select: none;
+   line-height: 1.6em;
+   color: var(--color-gray);
+
+   font: {
+      size: 16px;
+      family: 'Open Sans', sans-serif;
+      weight: 400;
+   }
+}

@@ -1,0 +1,17 @@
+:root {
+   --color-dark-blue: #333e4f;
+   --color-gray: #535353;
+   --color-lightdark-white: #fbfbfb;
+   --color-light-white: #f7f7f7;
+}
+
+$grid: 8px;
+
+$g05: $grid * 0.5;
+$g1: $grid * 1;
+$g2: $grid * 2;
+$g3: $grid * 3;
+$g4: $grid * 4;
+$g5: $grid * 5;
+$g6: $grid * 6;
+$g8: $grid * 8;

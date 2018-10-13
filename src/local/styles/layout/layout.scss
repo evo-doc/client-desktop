@@ -1,0 +1,15 @@
+.layout {
+   display: grid;
+   grid-template-columns: $g5 auto 0 $g5;
+   grid-template-rows: 38px auto;
+   grid-template-areas:
+      'drag-zone drag-zone drag-zone drag-zone'
+      'sidebar-left main sidebar-information sidebar-right';
+   width: 100vw;
+   height: 100vh;
+   background-color: #fff;
+
+   &_sidebar {
+      grid-template-columns: $g5 auto 248px $g5;
+   }
+}
