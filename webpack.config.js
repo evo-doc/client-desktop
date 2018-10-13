@@ -130,7 +130,7 @@ const application = {
          },
 
          {
-            test: /\.(png|svg|jpg|gif)$/,
+            test: /\.(png|svg|jpg|gif|woff2)$/,
             use: [
                {
                   loader: 'file-loader',
