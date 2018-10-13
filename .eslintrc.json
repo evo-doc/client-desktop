@@ -19,5 +19,9 @@
          "error",
          3
       ]
+   },
+   // Settings
+   "settings": {
+      "import/resolver": "webpack"
    }
 }
