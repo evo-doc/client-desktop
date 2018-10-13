@@ -11,7 +11,7 @@ const SassGlobImporter = require('node-sass-glob-importer');
 
 const mode = process.env.NODE_ENV;
 
-// const isDev = mode === 'development';
+const isDev = mode === 'development';
 // const isNotDev = mode !== 'development';
 // const isProd = mode === 'production';
 const isNotProd = mode !== 'production';
@@ -77,6 +77,7 @@ const application = {
    plugins: isNotProd
       ? notProductionPlugins
       : ProductionPlugins,
+   watch: isDev,
    resolve: {
       alias: {
          Components: path.join(__dirname, 'src/local/components/'),
