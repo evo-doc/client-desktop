@@ -130,12 +130,24 @@ const application = {
          },
 
          {
-            test: /\.(png|svg|jpg|gif|woff2)$/,
+            test: /\.(png|svg|jpg|gif)$/,
             use: [
                {
                   loader: 'file-loader',
                   options: {
                      outputPath: 'images',
+                  },
+               },
+            ],
+         },
+
+         {
+            test: /\.(woff2)$/,
+            use: [
+               {
+                  loader: 'file-loader',
+                  options: {
+                     outputPath: 'fonts',
                   },
                },
             ],
