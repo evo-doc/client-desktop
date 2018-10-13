@@ -1,0 +1,20 @@
+{
+  "levels": {
+    "global": true,
+    "error": true,
+    "warn": true,
+    "info": true,
+    "debug": true,
+    "trace": true
+  },
+  "paths": {
+    "txt": {
+      "warn": "log/warn.txt.log",
+      "trace": "log/trace.txt.log"
+    },
+    "json": {
+      "warn": "log/warn.json.log",
+      "trace": "log/trace.json.log"
+    }
+  }
+}
