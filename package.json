@@ -1,5 +1,6 @@
 {
   "name": "evodoc-client-desktop",
+  "productName": "EvoDoc",
   "version": "0.0.0",
   "description": "EvoDoc v2 Client -  macOS/linux/windows",
   "main": "./electron/electron.dev.config.js",
