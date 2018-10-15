@@ -1,0 +1,27 @@
+{
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "recurseDepth": 10,
+  "opts": {
+    "template": "node_modules/tui-jsdoc-template",
+    "encoding": "utf8",
+    "destination": "./docs/",
+    "recurse": true
+  },
+  "templates": {
+    "name": "EvoDoc Documentation",
+    "footerText": "Copyright © 2018 CTU FIT EvoDoc Team",
+    "logo": {
+      "width": "0px",
+      "height": "0px"
+    }
+  },
+  "source": {
+    "include": [
+      "./README.md",
+      "./src/"
+    ],
+    "includePattern": ".+\\.js$"
+  }
+}

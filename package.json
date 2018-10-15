@@ -44,7 +44,11 @@
     "_04b": "--- Testing",
     "_04c": "------------------------------------------------------------------------------------",
     "lint": "eslint .",
-    "test": "echo Test"
+    "test": "echo Test",
+    "_05a": "------------------------------------------------------------------------------------",
+    "_05b": "--- Other",
+    "_05c": "------------------------------------------------------------------------------------",
+    "docs": "rm -rf ./docs/ && jsdoc --configure ./.jsdoc.json --verbose --private"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1",
@@ -59,11 +63,13 @@
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.1.2",
+    "jsdoc": "^3.5.5",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.3",
     "node-sass-glob-importer": "^5.2.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "tui-jsdoc-template": "^1.2.2",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
