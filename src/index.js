@@ -1,3 +1,4 @@
-// Add FontAwesome library
-require('Resources/libs/js/fontawesome.min.js');
+// FontAwesome library
+require('@fortawesome/fontawesome-free/js/all');
+// CSS
 require('Styles/index.scss');
