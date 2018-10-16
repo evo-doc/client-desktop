@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "language": "English"
+  },
+  "auth": {
+    "login": "Login",
+    "email": "E-mail",
+    "password": "Password"
+  }
+}
