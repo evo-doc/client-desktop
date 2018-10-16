@@ -18,10 +18,14 @@
       "indent": [
          "error",
          3
-      ]
+      ],
+      "no-underscore-dangle": "off"
    },
    // Settings
    "settings": {
       "import/resolver": "webpack"
+   },
+   "globals": {
+      "evodoc": true
    }
 }

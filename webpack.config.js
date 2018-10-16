@@ -80,6 +80,10 @@ const application = {
    watch: isDev,
    resolve: {
       alias: {
+         Kernel: path.join(__dirname, 'src/kernel/'),
+         Configs: path.join(__dirname, 'src/config/'),
+         Modules: path.join(__dirname, 'src/kernel/modules/'),
+         Local: path.join(__dirname, 'src/local/'),
          Components: path.join(__dirname, 'src/local/components/'),
          Localization: path.join(__dirname, 'src/local/localization/'),
          Resources: path.join(__dirname, 'src/local/resources/'),
