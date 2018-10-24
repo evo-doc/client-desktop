@@ -80,6 +80,7 @@ const application = {
    watch: isDev,
    resolve: {
       alias: {
+         Src: path.join(__dirname, 'src/'),
          Kernel: path.join(__dirname, 'src/kernel/'),
          Configs: path.join(__dirname, 'src/config/'),
          Modules: path.join(__dirname, 'src/kernel/modules/'),
@@ -130,7 +131,14 @@ const application = {
 
          {
             test: /\.pug$/,
-            use: [{ loader: 'pug-loader' }],
+            use: [
+               {
+                  loader: 'pug-loader',
+                  options: {
+                     root: path.join(__dirname, './src/local'),
+                  },
+               },
+            ],
          },
 
          {
