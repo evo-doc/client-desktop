@@ -19,7 +19,10 @@
          "error",
          3
       ],
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "global-require": "off",
+      "class-methods-use-this": "off",
+      "no-plusplus": "off"
    },
    // Settings
    "settings": {
