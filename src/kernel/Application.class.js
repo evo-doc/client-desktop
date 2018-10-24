@@ -24,7 +24,7 @@ class Application {
    }
 
    init() {
-      log.info('Application Initializer');
+      log.trace('Application Initializer');
 
       this.getLocalization().init();
       this.getAPI().init();

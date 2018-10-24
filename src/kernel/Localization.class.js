@@ -42,6 +42,8 @@ class Localization {
     * (+ storage value).
     */
    init() {
+      log.group('Localization Init');
+
       // Load localizations
       this._localizations = localizations;
       log.trace(`Loaded localizations: ${Object.keys(this._localizations).join(', ')}`);
@@ -78,6 +80,8 @@ class Localization {
          this._localizationStorage.setData('userLocalization', this._localizationDefault);
          log.warn(`User localization is reset to "${this._localizationDefault}".`);
       }
+
+      log.groupEnd('Localization Init');
    }
 
 
@@ -89,9 +93,13 @@ class Localization {
     * @param {string} [localization] - Specific localization, e.g. en
     */
    getPhrase(path, localization = null) {
-      const fullPath = localization !== null
+      let fullPath = localization !== null
          ? `${localization}.${path}`
          : `${this._localizationUser}.${path}`;
+
+      fullPath = fullPath.slice(-1) === '.'
+         ? fullPath.slice(0, -1)
+         : fullPath;
 
       try {
          return this._serachPhrase(fullPath, fullPath);

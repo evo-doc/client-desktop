@@ -1,3 +1,5 @@
+const log = require('Modules/logger.app.module');
+
 /**
  * Loader - globally required modul via webpack. Reserves `loader` as a global variable.
  * Provides an interface of loader screen.
@@ -10,6 +12,7 @@
  */
 
 const loader = document.getElementById('loader');
+if (loader === null) log.error('Module / Loader: Cannot find loader element');
 
 /**
  * @summary Show loader

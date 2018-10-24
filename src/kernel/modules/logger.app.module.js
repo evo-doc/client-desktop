@@ -9,9 +9,16 @@ module.exports = {
       console.log(message);
    },
    warn(message) {
-      console.log(message);
+      console.warn(message);
    },
    error(message) {
-      console.log(message);
+      console.error(message);
+   },
+
+   group(id) {
+      console.group(id);
+   },
+   groupEnd(id) {
+      console.groupEnd(id);
    },
 };
