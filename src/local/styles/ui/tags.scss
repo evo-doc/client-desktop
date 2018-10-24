@@ -1,0 +1,27 @@
+.tags {
+   display: flex;
+   justify-content: flex-start;
+}
+
+.tag {
+   padding: 0 $g1;
+   margin: 0 $g05;
+   border-radius: $g05;
+   background-color: var(--color-light-blue);
+   color: var(--color-light-white);
+   letter-spacing: 1px;
+   font-size: 10px;
+   text-transform: uppercase;
+   font-weight: 400;
+   height: 20px;
+   line-height: 20px;
+
+   &_version {
+      background-color: var(--color-light-gray);
+      color: var(--color-dark-blue);
+   }
+
+   &:last-child {
+      margin-right: 0;
+   }
+}

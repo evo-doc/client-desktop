@@ -1,0 +1,30 @@
+h1 Project Name
+p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore veniam alias molestias consequatur, voluptatum earum deleniti dolor, est enim distinctio non dolorum commodi sequi minima dolorem sed, ipsam adipisci iste. Animi voluptate error laborum nam aliquam quod culpa odio magni dicta non sed iste natus, aperiam exercitationem rerum blanditiis nulla?
+
+h2 Collaborators
+
+.collaborators
+   .collaborators__item username
+   .collaborators__item username
+   .collaborators__item username
+   .collaborators__item username
+   .collaborators__item username
+
+h2 Modules
+input(type="Text" placeholder="Search")
+
+.list
+   - var n = 0;
+   while n < 4
+      a.list__item(href="/project/project-name-" + n + "/view")
+         .list__header
+            .list__header-left
+               .list__title= 'username/project-name-' + n++
+            .list__header-right
+               .list__labels.tags
+                  .tag label
+                  .tag label
+         .list__description
+            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+
+a.button(href="/") View all

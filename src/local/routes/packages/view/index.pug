@@ -1,0 +1,18 @@
+h1 User packages
+a.button(href="/packages/create") Add Package
+
+h2 User Packages
+input(type="Text" placeholder="Search")
+
+.list
+   - var n = 0;
+   while n < 4
+      a.list__item(href="/package/package-name-" + n + "/view")
+         .list__header
+            .list__header-left
+               .list__title= 'username/package-name-' + n++
+            .list__header-right
+               .list__version
+                  | v58.1.9632
+         .list__description
+            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.

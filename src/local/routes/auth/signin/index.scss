@@ -1,0 +1,32 @@
+.authorization {
+   display: flex;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   z-index: 9999;
+
+   background: url('../../../resources/images/logotype.png') no-repeat, #333e4f;
+   background-size: 50% auto;
+   background-position: -150px -300px;
+   justify-content: center;
+   align-items: center;
+}
+
+.authorization__form {
+   display: flex;
+   color: #fff;
+   background: rgba(51, 62, 79, 0.5);
+   background-color: rebeccapurple;
+
+   button {
+      display: none;
+   }
+
+   form {
+      width: 332px;
+      display: flex;
+      flex-direction: column;
+   }
+}

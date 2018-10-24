@@ -1,0 +1,15 @@
+.button {
+   display: inline-block;
+   padding: $g1 $g4;
+   background-color: var(--color-dark-blue);
+   color: var(--color-light-white);
+
+   text-decoration: none;
+   text-transform: uppercase;
+   border-radius: 32px 18px 32px 18px;
+
+   &:hover {
+      text-decoration: none;
+      opacity: 0.9;
+   }
+}

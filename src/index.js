@@ -8,3 +8,5 @@ const Application = require('Kernel/Application.class');
 // Application
 global.evodoc = new Application();
 evodoc.init();
+
+evodoc.getRouter().refresh();

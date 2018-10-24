@@ -6,5 +6,10 @@
     "login": "Login",
     "email": "E-mail",
     "password": "Password"
+  },
+  "error": {
+    "400": "Client side error.",
+    "404": "Page not found.",
+    "500": "Server error."
   }
 }

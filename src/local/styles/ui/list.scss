@@ -1,0 +1,39 @@
+.list {
+   &__item {
+      display: block;
+      margin: $g2 0 $g2 0;
+      text-decoration: none;
+      color: var(--color-dark-blue);
+
+      &:hover {
+         text-decoration: none;
+         color: var(--color-dark-blue);
+         // background-color: var(--color-light-white);
+
+         .list__title {
+            color: var(--color-light-blue);
+         }
+      }
+   }
+
+   &__header {
+      display: flex;
+      justify-content: space-between;
+
+      &-left,
+      &-right {
+         display: flex;
+         justify-content: flex-end;
+         align-items: center;
+      }
+   }
+
+   &__title {
+      font-size: 18px;
+   }
+
+   &__description {
+      color: var(--color-gray);
+      opacity: 0.5;
+   }
+}

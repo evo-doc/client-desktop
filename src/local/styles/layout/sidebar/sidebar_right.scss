@@ -1,3 +1,6 @@
 nav.sidebar_right {
    grid-area: sidebar-right;
+   display: flex;
+   justify-content: space-between;
+   flex-direction: column;
 }

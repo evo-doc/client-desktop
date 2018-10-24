@@ -1,0 +1,23 @@
+.sidebar__buttons {
+   display: flex;
+   flex-direction: column;
+}
+
+.sidebar__button,
+.sidebar__button a {
+   display: block;
+   width: 40px;
+   height: 40px;
+   overflow: hidden;
+
+   text-align: center;
+   font-size: 16px;
+   line-height: 40px;
+
+   color: #333e4f;
+
+   &:hover {
+      background-color: #333e4f;
+      color: white;
+   }
+}

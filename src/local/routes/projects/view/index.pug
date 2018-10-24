@@ -1,0 +1,22 @@
+h1 User Projects
+p User projects – all projects where user has an access.
+a.button(href="/projects/create") Create Project
+
+h2 User Projects
+input(type="Text" placeholder="Search")
+
+.list
+   - var n = 0;
+   while n < 4
+      a.list__item(href="/project/project-name-" + n + "/view")
+         .list__header
+            .list__header-left
+               .list__title= 'username/project-name-' + n++
+            .list__header-right
+               .list__labels.tags
+                  .tag label
+                  .tag label
+               .list__version
+                  | v58.1.9632
+         .list__description
+            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.

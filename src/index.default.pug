@@ -1,0 +1,22 @@
+h1 #{_data.requestedUrl} :: Default render template
+h2 Arguments
+p #{_data.args}
+h2 Routes
+ul
+   each val in routes
+      li
+         a(href=val)= val
+   li: a(href="/error/400") Error 400
+   li: a(href="/error/404") Error 404
+   li: a(href="/error/500") Error 500
+   li: a(href="/profiles/username") /profiles/username
+   li: a(href="/package/package-name/view") /package/package-name/view
+   li: a(href="/project/project-name/view") /project/project-name/view
+   li: a(href="/project/project-name/edit") /project/project-name/edit
+   li: a(href="/project/project-name/modules/view") /project/project-name/modules/view
+   li: a(href="/project/project-name/modules/create") /project/project-name/modules/create
+   li: a(href="/project/project-name/module/module-name/view") /project/project-name/module/module-name/view
+   li: a(href="/project/project-name/module/module-name/edit") /project/project-name/module/module-name/edit
+
+h2 Localization
+p #{_data.localization}
