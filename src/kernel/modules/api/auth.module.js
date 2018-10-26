@@ -165,7 +165,7 @@ class Authorization {
    }
 
 
-   async isAuthorized() {
+   async isAuthenticated() {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
@@ -180,7 +180,7 @@ class Authorization {
 
       let resultRequest;
       try {
-         resultRequest = await connect.postJSON('/auth/authorised');
+         resultRequest = await connect.getJSON('/auth/authenticated');
       } catch (e) {
          throw e;
       }

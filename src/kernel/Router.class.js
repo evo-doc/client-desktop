@@ -158,10 +158,10 @@ class Router {
          try {
             await evodoc.getAPI()
                .getAuth()
-               .isAuthorized();
+               .isAuthenticated();
          } catch (e) {
             log.groupEnd('Route Process');
-            return; // Stop routing, error from isAuthorized called new redirect
+            return; // Stop routing, error from isAuthenticated called new redirect
          }
       } else {
          log.trace(`Router: Page ${path} is auth free`);

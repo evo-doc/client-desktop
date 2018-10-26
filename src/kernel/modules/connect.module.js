@@ -77,7 +77,7 @@ function checkGlobal(status, body, hash) {
  *
  * @return {Promise}
  */
-module.exports.getJSON = async (url, body, optionsUser = {}) => {
+module.exports.getJSON = async (url, body = {}, optionsUser = {}) => {
    // Unique ID
    const hash = randomstring.generate(32);
 
@@ -92,11 +92,11 @@ module.exports.getJSON = async (url, body, optionsUser = {}) => {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',
-         Authorization: `Bearer ${evodoc.getAPI().getToken()}`,
+         Authorization: `Bearer ${evodoc.getAPI().getAuth().getToken()}`,
       },
    };
-   const options = Object.assign(optionsDefault, optionsUser);
-   const requestedURL = `${config.ajax.host}${url}?${getURL}`;
+   const options = Object.assign({}, optionsDefault, optionsUser);
+   const requestedURL = `${config.host}${url}?${getURL}`;
 
 
    // Send request
@@ -147,7 +147,7 @@ module.exports.getJSON = async (url, body, optionsUser = {}) => {
  *
  * @return {(object|error)}
  */
-module.exports.postJSON = async (url, body, optionsUser = {}) => {
+module.exports.postJSON = async (url, body = {}, optionsUser = {}) => {
    log.trace('Connect: postJSON called.');
    // Unique request ID (for logs)
    const hash = randomstring.generate(32);
