@@ -1,0 +1,90 @@
+.noty_theme__evodoc.noty_bar {
+   margin: 4px 0;
+   overflow: hidden;
+   position: relative;
+   border: 1px solid transparent;
+   // border-radius: 0.25rem;
+   // border-radius: 38px 18px 38px 18px;
+   border-radius: 24px 8px 24px 24px;
+   font-style: italic;
+   font-weight: 300;
+}
+.noty_theme__evodoc.noty_bar .noty_body {
+   padding: 0.75rem 1.25rem;
+}
+.noty_theme__evodoc.noty_bar .noty_buttons {
+   padding: 10px;
+}
+.noty_theme__evodoc.noty_bar .noty_close_button {
+   font-size: 1.5rem;
+   font-weight: 700;
+   line-height: 1;
+   color: #000;
+   text-shadow: 0 1px 0 #fff;
+   opacity: 0.5;
+   background: transparent;
+}
+.noty_theme__evodoc.noty_bar .noty_close_button:hover {
+   background: transparent;
+   text-decoration: none;
+   cursor: pointer;
+   opacity: 0.75;
+}
+
+.noty_theme__evodoc.noty_type__alert,
+.noty_theme__evodoc.noty_type__notification {
+   background-color: #ecf0f1;
+   color: inherit;
+}
+
+.noty_theme__evodoc.noty_type__warning {
+   background-color: #f39c12;
+   color: white;
+}
+
+.noty_theme__evodoc.noty_type__error {
+   background-color: #c0392b;
+   color: white;
+}
+
+.noty_theme__evodoc.noty_type__info,
+.noty_theme__evodoc.noty_type__information {
+   background-color: #3498db;
+   color: white;
+}
+
+.noty_theme__evodoc.noty_type__success {
+   background-color: #27ae60;
+   color: white;
+}
+
+// Progressbar
+
+.noty_theme__evodoc.noty_type__alert,
+.noty_theme__evodoc.noty_type__notification {
+   .noty_progressbar {
+      background-color: #646464;
+      opacity: 1;
+   }
+}
+.noty_theme__evodoc.noty_type__warning,
+.noty_theme__evodoc.noty_type__error,
+.noty_theme__evodoc.noty_type__info,
+.noty_theme__evodoc.noty_type__information,
+.noty_theme__evodoc.noty_type__success {
+   .noty_progressbar {
+      background-color: #fff;
+      opacity: 1;
+   }
+}
+
+.noty_has_timeout.noty_has_progressbar {
+   padding-bottom: 14px;
+}
+
+.noty_has_timeout.noty_has_progressbar .noty_progressbar {
+   left: 20px;
+   bottom: 14px;
+   height: 2px;
+   max-width: 283px;
+}
