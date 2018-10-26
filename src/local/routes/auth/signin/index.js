@@ -19,7 +19,7 @@ class Index extends Page {
    __ajaxData() {}
 
    __handlers() {
-      document.getElementById('authorization__form').addEventListener('submit', (evt) => {
+      document.getElementById('authorization__form_signin').addEventListener('submit', (evt) => {
          evt.preventDefault();
          this._sendSignIn();
       });

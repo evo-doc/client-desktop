@@ -1,10 +1,15 @@
 .authorization
    .authorization__form
-      form 
-         input(type="text" placeholder="Username")
-         input(type="email" placeholder="Email")
-         input(type="password" placeholder="Password")
+      form#authorization__form_signup
+         input(type="text" placeholder="Username").input_auth
+         input(type="email" placeholder="Email").input_auth
+         input(type="password" placeholder="Password").input_auth
+         .authorization__passvalidity
          button(type="submit") Sign Up
 
-      a(href="/") HOME
-      a(href="/error/400") 400
+   .authorization-change
+      a(href="/auth/signin") Already registered? Sign In!
+      | 
+      | |
+      |  
+      a(href="/") (BETA Homepage)

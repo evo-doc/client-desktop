@@ -1,3 +1,5 @@
+@import '~Styles/_variables.scss';
+
 .authorization {
    display: flex;
    position: absolute;
@@ -8,7 +10,7 @@
    z-index: 9999;
 
    background: url('../../../resources/images/logotype.png') no-repeat, #333e4f;
-   background-size: 50% auto;
+   background-size: 700px auto;
    background-position: -150px -300px;
    justify-content: center;
    align-items: center;
@@ -18,7 +20,6 @@
    display: flex;
    color: #fff;
    background: rgba(51, 62, 79, 0.5);
-   background-color: rebeccapurple;
 
    button {
       display: none;
@@ -28,5 +29,37 @@
       width: 332px;
       display: flex;
       flex-direction: column;
+   }
+}
+
+.authorization-change {
+   position: absolute;
+   bottom: $g2;
+   margin: 0 auto;
+   color: #fff;
+
+   a {
+      color: #fff;
+      text-decoration: none;
+      &:hover {
+         color: #fff;
+         text-decoration: none;
+         opacity: 0.8;
+      }
+   }
+}
+
+.authorization__notification {
+   background-color: #ccc;
+   padding: 4px 24px;
+   border-radius: 32px 18px 32px 18px;
+   margin: 0 0 8px;
+   font-style: italic;
+
+   &_warn {
+      background-color: #f1ac16;
+   }
+   &_error {
+      background-color: #ea1d1d;
    }
 }
