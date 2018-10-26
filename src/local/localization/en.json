@@ -8,6 +8,7 @@
     "password": "Password"
   },
   "error": {
+    "001": "Internet Connection Failed",
     "400": "Client side error.",
     "404": "Page not found.",
     "500": "Server error."
