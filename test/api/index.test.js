@@ -51,15 +51,23 @@ const utility = {
 // -------------------------------------------------------------------------------------------------
 
 describe('CONNECTION', () => {
-   it('User is online', async () => {
-      const res = await chai.request('https://google.com/').get('/');
-      expect(res.status).to.equal(200);
-   });
+   it('User is online', () => chai.request('https://google.com/')
+      .get('/')
+      .then((res) => {
+         expect(res.status).to.equal(200);
+      })
+      .catch((err) => {
+         throw err;
+      }));
 
-   it('Server is online', async () => {
-      const res = await chai.request(config.host).get('/');
-      expect(res.status).to.equal(200);
-   });
+   it('Server is online', () => chai.request(config.host)
+      .get('/')
+      .then((res) => {
+         expect(res.status).to.equal(200);
+      })
+      .catch((err) => {
+         throw err;
+      }));
 });
 
 require('./authentication/sigin.test')(config, method, utility);
