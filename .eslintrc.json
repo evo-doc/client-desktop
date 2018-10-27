@@ -22,7 +22,10 @@
       "no-underscore-dangle": "off",
       "global-require": "off",
       "class-methods-use-this": "off",
-      "no-plusplus": "off"
+      "no-plusplus": "off",
+      // Chai expressions
+      "no-unused-expressions": 0,
+      "chai-friendly/no-unused-expressions": 2
    },
    // Settings
    "settings": {
@@ -30,5 +33,8 @@
    },
    "globals": {
       "evodoc": true
-   }
+   },
+   "plugins": [
+      "chai-friendly"
+   ]
 }

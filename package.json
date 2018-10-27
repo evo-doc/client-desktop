@@ -44,7 +44,7 @@
     "_04b": "--- Testing",
     "_04c": "------------------------------------------------------------------------------------",
     "lint": "eslint .",
-    "test": "echo Test",
+    "test": "mocha ./test",
     "_05a": "------------------------------------------------------------------------------------",
     "_05b": "--- Other",
     "_05c": "------------------------------------------------------------------------------------",
@@ -59,7 +59,10 @@
     "randomstring": "^1.1.5"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "clean-webpack-plugin": "^0.1.19",
+    "colors": "^1.3.2",
     "css-loader": "^1.0.0",
     "electron-packager": "^12.2.0",
     "file-loader": "^2.0.0",
@@ -67,6 +70,7 @@
     "husky": "^1.1.2",
     "jsdoc": "^3.5.5",
     "mini-css-extract-plugin": "^0.4.4",
+    "mocha": "^5.2.0",
     "node-sass": "^4.9.3",
     "node-sass-glob-importer": "^5.2.0",
     "sass-loader": "^7.1.0",
@@ -79,6 +83,7 @@
     "eslint": "^5.7.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-import": "^2.14.0"
   }
 }
