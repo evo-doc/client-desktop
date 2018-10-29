@@ -16,9 +16,9 @@ class Index extends Page {
       this._getRenderParent().innerHTML = this._template();
    }
 
-   // __ajaxData() {}
+   __ajaxData() {}
 
-   // __handlers() {}
+   __handlers() {}
 }
 
 module.exports = (config = {}) => ({

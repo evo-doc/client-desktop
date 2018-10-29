@@ -1,0 +1,12 @@
+.about-cards {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: flex-start;
+   align-content: flex-start;
+   justify-content: stretch;
+}
+
+.about-card {
+   flex: 1 1 40%;
+}
