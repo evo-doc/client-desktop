@@ -3,21 +3,60 @@
    flex-direction: column;
 }
 
+.sidebar__button {
+   position: relative;
+}
+
 .sidebar__button,
 .sidebar__button a {
    display: block;
    width: 40px;
    height: 40px;
-   overflow: hidden;
 
    text-align: center;
    font-size: 16px;
    line-height: 40px;
 
    color: #333e4f;
+}
 
-   &:hover {
-      background-color: #333e4f;
+.sidebar__button:hover {
+   background-color: #333e4f;
+   a,
+   span {
       color: white;
+   }
+
+   .sidebar__desc {
+      display: block;
+   }
+}
+
+.sidebar__desc {
+   background-color: #333e4f;
+   color: white;
+   display: none;
+   height: 40px;
+   position: absolute;
+   top: 0;
+   opacity: 0.92;
+   line-height: 40px;
+   text-transform: uppercase;
+   padding: 0 12px;
+   letter-spacing: 2px;
+   font-weight: 200;
+   font-size: 16px;
+   width: max-content;
+}
+
+.sidebar_left {
+   .sidebar__desc {
+      left: 40px;
+   }
+}
+
+.sidebar_right {
+   .sidebar__desc {
+      right: 40px;
    }
 }

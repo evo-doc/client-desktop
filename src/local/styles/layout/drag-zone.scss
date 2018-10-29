@@ -1,6 +1,8 @@
 .drag-zone {
    grid-area: drag-zone;
    -webkit-app-region: drag;
+   background: url('../resources/images/logotype.png') no-repeat -3px -123px;
+   background-size: 170px;
    background-color: var(--color-dark-blue);
    display: flex;
    justify-content: flex-end;
