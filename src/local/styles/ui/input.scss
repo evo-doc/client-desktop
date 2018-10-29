@@ -6,7 +6,7 @@
 }
 
 input {
-   padding: 0 $g1;
+   padding: 0 $g2;
    box-shadow: 0 0 0 1px var(--color-light-gray);
    color: var(--color-dark-blue);
    border: 0;
@@ -25,4 +25,16 @@ input.input_auth {
    padding: 0 $g3;
    outline: 0;
    margin: 0 0 $g3 0;
+}
+
+textarea {
+   padding: $g2 $g2;
+   box-shadow: 0 0 0 1px var(--color-light-gray);
+   color: var(--color-dark-blue);
+   border: 0;
+   outline: 0;
+   border-radius: $g05;
+   min-height: 200px;
+   font-size: 1rem;
+   width: 100%;
 }

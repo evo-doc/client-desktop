@@ -5,6 +5,7 @@ a.button(href="/projects/create") Create Project
 h2 User Projects
 input(type="Text" placeholder="Search")
 
+
 .list
    - var n = 0;
    while n < 4
@@ -14,9 +15,6 @@ input(type="Text" placeholder="Search")
                .list__title= 'username/project-name-' + n++
             .list__header-right
                .list__labels.tags
-                  .tag label
-                  .tag label
-               .list__version
-                  | v58.1.9632
+                  .tag.tag_owner owner
          .list__description
             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.

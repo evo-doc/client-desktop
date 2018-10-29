@@ -13,6 +13,7 @@ a.button(href="/profile/edit") Edit Account
 
 h1 Packages
 
+
 .list
    - var n = 0;
    while n < 4
@@ -22,12 +23,11 @@ h1 Packages
                .list__title= 'username/package-name-' + n++
             .list__header-right
                .list__labels.tags
-                  .tag label
-                  .tag label
-               .list__version
-                  | v58.1.9632
+                  .tag.tag_owner owner
+                  .tag.tag_version v58.1.9632
          .list__description
             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+
 
 a.button(href="/packages/view") View all packages
 
@@ -39,13 +39,10 @@ h1 Projects
       a.list__item(href="/project/project-name-" + n + "/view")
          .list__header
             .list__header-left
-               .list__title= 'username/project-name-' + n++
+               .list__title= 'Project Name ' + n++
             .list__header-right
                .list__labels.tags
-                  .tag label
-                  .tag label
-               .list__version
-                  | v58.1.9632
+                  .tag.tag_owner owner
          .list__description
             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
 

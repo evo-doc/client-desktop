@@ -16,10 +16,10 @@ input(type="Text" placeholder="Search")
 .list
    - var n = 0;
    while n < 4
-      a.list__item(href="/project/project-name-" + n + "/view")
+      a.list__item(href="/project/project-name-" + n + "/module/module-name/view")
          .list__header
             .list__header-left
-               .list__title= 'username/project-name-' + n++
+               .list__title= 'module-name-' + n++
             .list__header-right
                .list__labels.tags
                   .tag label

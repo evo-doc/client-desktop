@@ -10,15 +10,20 @@
    background-color: var(--color-light-blue);
    color: var(--color-light-white);
    letter-spacing: 1px;
-   font-size: 10px;
+   font-size: 11px;
    text-transform: uppercase;
    font-weight: 400;
    height: 20px;
    line-height: 20px;
 
    &_version {
-      background-color: var(--color-light-gray);
-      color: var(--color-dark-blue);
+      background-color: var(--color-dark-blue);
+      color: white;
+   }
+
+   &_owner {
+      background-color: var(--color-green);
+      color: white;
    }
 
    &:last-child {

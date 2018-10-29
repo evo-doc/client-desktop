@@ -1,6 +1,10 @@
 main {
    grid-area: main;
-   padding: $g5;
+   padding: $g8 $g5;
    overflow-x: hidden;
    overflow-y: scroll;
+
+   :first-child {
+      margin-top: 0 !important;
+   }
 }
