@@ -13,7 +13,7 @@ $loader-delay: 250ms;
 }
 
 .loader {
-   &_show {
+   &_visible {
       opacity: 1 !important;
       height: 100% !important;
       transition: height 0ms linear $loader-delay,

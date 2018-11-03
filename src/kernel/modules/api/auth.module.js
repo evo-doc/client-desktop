@@ -233,7 +233,7 @@ class Authorization {
    }
 
    removeToken() {
-      this._storage.setData('token', '');
+      this._storage.setData('token', 'xxx');
    }
 
 
@@ -246,7 +246,7 @@ class Authorization {
    }
 
    removeUsername() {
-      this._storage.setData('username', '');
+      this._storage.setData('username', 'xxx');
    }
 }
 
