@@ -14,12 +14,24 @@
       color: var(--color-light-white);
 
       &_user {
-         padding: 0 20px;
+         padding: 4px 14px 0;
          letter-spacing: 1px;
+         line-height: 1em;
 
          font: {
-            size: 12px;
-            weight: 200;
+            size: 13px;
+         }
+
+         span {
+            display: block;
+            text-align: right;
+            margin-bottom: 1px;
+
+            font: {
+               size: 9px;
+               weight: 200;
+               style: italic;
+            }
          }
       }
 

@@ -1,0 +1,38 @@
+.search {
+   // border: 1px inset var(--color-light-gray);
+
+   border-radius: 38px 18px 38px 18px;
+   height: 40px;
+   overflow: hidden;
+   margin: $g4 0;
+
+   label {
+      display: flex;
+   }
+
+   span {
+      background-color: var(--color-dark-blue);
+      display: block;
+      flex: 0 0 auto;
+      padding: 0 $g2 0 $g3;
+      color: white;
+      line-height: 40px;
+      text-transform: uppercase;
+      font-weight: 200;
+      letter-spacing: 1px;
+   }
+
+   input {
+      background-color: var(--color-lightdark-white);
+      // background-color: var(--color-light-gray);
+      height: 40px;
+      display: block;
+      flex: 1 1 0;
+      box-shadow: none;
+      border-radius: 0 18px 38px 0;
+      font-weight: 200;
+   }
+   ::placeholder {
+      color: gray;
+   }
+}

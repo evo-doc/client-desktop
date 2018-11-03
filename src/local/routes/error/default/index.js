@@ -22,9 +22,9 @@ class Index extends Page {
       });
    }
 
-   // __ajaxData() {}
+   __ajaxData() {}
 
-   // __handlers() {}
+   __handlers() {}
 }
 
 module.exports = (config = {}) => ({

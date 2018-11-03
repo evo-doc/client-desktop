@@ -1,46 +1,54 @@
-h1 User packages
-input(type="text", name="search" placeholder="Search")
+.search.search_big
+   label
+      span User Packages
+      input(type="text", name="search" placeholder="Search")
 
-.list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/package/package-name-" + n + "/view")
-         .list__header
-            .list__header-left
-               .list__title= 'username/package-name-' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag label
-                  .tag label
-                  .tag.tag_owner owner
-                  .tag.tag_version v58.1.9632
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+p Packages functionality is not released yet.
+
+//- .list
+//-    - var n = 0;
+//-    while n < 4
+//-       a.list__item(href="/package/package-name-" + n + "/view")
+//-          .list__header
+//-             .list__header-left
+//-                .list__title= 'username/package-name-' + n++
+//-             .list__header-right
+//-                .list__labels.tags
+//-                   .tag label
+//-                   .tag label
+//-                   .tag.tag_owner owner
+//-                   .tag.tag_version v58.1.9632
+//-          .list__description
+//-             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
 
 
 h1 Getting Started
 
-ul 
-   li
-      a(href="/packages/create") Add pacakge
-   li
-      a(href="/projects/create") Create Project
-   li
-      a(href="/profile/view") View Profile
-   li
-      a(href="/docs") Read Docs
+.collection.collection_row.collection_button
+   a.button(href="/packages/create") Add pacakge
+   a.button.button_green(href="/projects/create") Create Project
+   a.button(href="/profile/view") View Profile
+   a.button(href="/docs") Read Docs
 
 h1 Statistics
 
 .stats
-   .stats__item 120 Users
-   .stats__item 34 Packages
-   .stats__item 203 Projects
+   .stats__item
+      .stats__value 120 
+      .stats__description Users
+   .stats__item
+      .stats__value 34 
+      .stats__description Packages
+   .stats__item
+      .stats__value 203 
+      .stats__description Projects
 
 h1 Popular packages
 
-.popular-packages(style="column-count: 4;")
-   - n = 0;
-   while n < 20
-      | example <br>
-      - n++
+p Packages functionality is not released yet.
+
+//- .popular-packages(style="column-count: 4;")
+//-    - n = 0;
+//-    while n < 20
+//-       | example <br>
+//-       - n++

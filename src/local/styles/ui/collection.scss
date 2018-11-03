@@ -1,0 +1,16 @@
+.collection {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+
+   &_button {
+      .button {
+         margin-right: $g1;
+         flex: 1 1 auto;
+
+         &:last-child {
+            margin: 0;
+         }
+      }
+   }
+}

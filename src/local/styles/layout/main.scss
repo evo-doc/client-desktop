@@ -4,7 +4,7 @@ main {
    overflow-x: hidden;
    overflow-y: scroll;
 
-   :first-child {
+   > :first-child {
       margin-top: 0 !important;
    }
 }
