@@ -70,4 +70,4 @@ describe('CONNECTION', () => {
       }));
 });
 
-require('./authentication/sigin.test')(config, method, utility);
+require('./authentication/signin.test')(config, method, utility);
