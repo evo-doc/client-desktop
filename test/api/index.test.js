@@ -71,3 +71,4 @@ describe('CONNECTION', () => {
 });
 
 require('./authentication/signin.test')(config, method, utility);
+require('./authentication/signup.test')(config, method, utility);
