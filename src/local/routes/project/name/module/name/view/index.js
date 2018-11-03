@@ -17,7 +17,6 @@ class Index extends Page {
          projectName: this._getArgs()[1],
          moduleName: this._getArgs()[2],
       };
-      console.log(data);
 
       this._getRenderParent().innerHTML = this._template(data);
    }
