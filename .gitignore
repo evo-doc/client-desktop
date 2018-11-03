@@ -3,5 +3,6 @@
 /node_modules/
 /release/*
 /tmp/*
+/logs/*
 *.log
 !.gitkeep

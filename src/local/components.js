@@ -3,7 +3,7 @@ const log = require('Modules/logger.app.module');
 const components = {};
 
 
-log.group('Components Loading');
+log.debug('Components Loading');
 
 // TEMPLATE - ./**/index.ejs
 ((files) => {
@@ -23,6 +23,6 @@ log.group('Components Loading');
    });
 })(require.context('./components/', true, /index\.scss$/));
 
-log.groupEnd('Components Loading');
+log.debug('Components Loading');
 
 module.exports = components;

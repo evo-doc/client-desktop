@@ -39,7 +39,7 @@
     "clean:build": "rm -rf ./build",
     "clean:docs": "rm -rf ./docs",
     "clean:release": "rm -rf ./release/**",
-    "clean:logs": "rm -rf ./logs/*.log",
+    "clean:logs": "find ./logs -type f -not -name '.gitkeep' -delete",
     "_04a": "------------------------------------------------------------------------------------",
     "_04b": "--- Testing",
     "_04c": "------------------------------------------------------------------------------------",
@@ -59,7 +59,8 @@
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "randomstring": "^1.1.5",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.4.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

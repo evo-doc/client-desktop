@@ -31,7 +31,7 @@ class Router {
       this._routeCollector = routeCollector;
 
       // Create routes
-      log.group('Router: add routes');
+      log.debug('Router: add routes');
 
       const routePaths = Object.keys(this._routeCollector);
 
@@ -47,7 +47,7 @@ class Router {
 
          log.trace(`Router [ADDED]: Route "${pagePath}"`);
       }
-      log.groupEnd('Router: add routes');
+      log.debug('Router: add routes');
 
       this._startListening();
    }
@@ -137,7 +137,7 @@ class Router {
     * @param {string} path
     */
    async route(path) {
-      log.group('Route Process');
+      log.debug('Route Process');
       log.trace(`Router: Searching for ${path}`);
 
       // Try fo find route
@@ -147,7 +147,7 @@ class Router {
          page = this._findRoute(path); // Has page index in roures and args from URL
       } catch (e) {
          log.trace(`Router: Page ${path} does not exist`);
-         log.groupEnd('Route Process');
+         log.debug('Route Process');
          this.load('/error/404');
          return; // Page does not exist
       }
@@ -160,7 +160,7 @@ class Router {
                .getAuth()
                .isAuthenticated();
          } catch (e) {
-            log.groupEnd('Route Process');
+            log.debug('Route Process');
             return; // Stop routing, error from isAuthenticated called new redirect
          }
       } else {
@@ -168,7 +168,7 @@ class Router {
       }
 
 
-      log.group('Page creation');
+      log.debug('Page creation');
       // Create page instance with its config & args
       log.trace('Router: Creating new page instance from its generator');
       this._current = new this._routes[page.i].generator.Page(
@@ -184,9 +184,9 @@ class Router {
          log.trace('Router: load() page crashed');
          // Stop routing, error from load called new redirect
       }
-      log.groupEnd('Page creation');
+      log.debug('Page creation');
 
-      log.groupEnd('Route Process');
+      log.debug('Route Process');
    }
 
    /**

@@ -42,8 +42,6 @@ class Localization {
     * (+ storage value).
     */
    init() {
-      log.group('Localization Init');
-
       // Load localizations
       this._localizations = localizations;
       log.trace(`Loaded localizations: ${Object.keys(this._localizations).join(', ')}`);
@@ -80,8 +78,6 @@ class Localization {
          this._localizationStorage.setData('userLocalization', this._localizationDefault);
          log.warn(`User localization is reset to "${this._localizationDefault}".`);
       }
-
-      log.groupEnd('Localization Init');
    }
 
 
