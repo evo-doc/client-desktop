@@ -21,7 +21,7 @@ module.exports.email = (email) => {
  * @return {boolean} - Password is valid
  */
 module.exports.password = (password) => {
-   const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+   const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
    return re.test(password);
 };
 
