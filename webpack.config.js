@@ -106,7 +106,7 @@ const application = {
                   : {
                      loader: MiniCssExtractPlugin.loader,
                      options: {
-                        publicPath: '../',
+                        // publicPath: '/',
                      },
                   },
                // Css loader
