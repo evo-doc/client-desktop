@@ -1,13 +1,9 @@
 .authorization
    .authorization__form
       form#authorization__form_signin
-         input(type="text" placeholder="Login").input_auth
-         input(type="password" placeholder="Password").input_auth
+         input#authorization__signin_login(type="text" placeholder="Login").input_auth
+         input#authorization__signin_password(type="password" placeholder="Password").input_auth
          button(type="submit") Sign In
 
    .authorization-change
       a(href="/auth/signup") Don't have an account? Sign Up!
-      | 
-      | |
-      |  
-      a(href="/") (BETA Homepage)

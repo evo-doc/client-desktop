@@ -29,9 +29,9 @@ class Authorization {
       // Developer mode
       // -------------------------------------------------------------------------------------------
 
-      if (username === '[test]' && password === '[test]') {
+      if (username === 'offline' && password === 'offlineTest0') {
          log.debug('[000] OFFLINE TESTING ACTIVE');
-         // Received data
+         // Received data placeholder
          const resultData = {
             token: '00000000000',
             username: 'TEST MODE',
@@ -53,8 +53,8 @@ class Authorization {
 
       let resultRequest;
       try {
-         resultRequest = await connect.postJSON('/login', {
-            username,
+         resultRequest = await connect.postJSON('/auth/signin', {
+            login: username,
             password,
          });
       } catch (e) {
@@ -105,14 +105,14 @@ class Authorization {
    }
 
 
-   async signUp(username, password, email) {
+   async signUp(username, email, password) {
       // -------------------------------------------------------------------------------------------
       // Regular mode
       // -------------------------------------------------------------------------------------------
 
-      let result;
+      let resultRequest;
       try {
-         result = await connect.postJSON('/registration', {
+         resultRequest = await connect.postJSON('/auth/signup', {
             username,
             password,
             email,
@@ -126,16 +126,20 @@ class Authorization {
       // -----------------------------------------------------------------------
 
       // 200
-      if (result.status === 200) {
+      if (resultRequest.status === 200) {
          log.info(`[200] User "${username}" was successfully registered!`);
-         this.saveToken(result.body.token);
-         // evodoc.getRequest().redirect('/authorization/verification');
+         const resultData = resultRequest.body;
+         this.saveToken(resultData.token);
+         this.saveUsername(resultData.username);
+
+         document.getElementById('username').innerHTML = resultData.username;
+         evodoc.getRouter().load('/');
          return;
       }
 
       // 400
-      if (result.status === 400) {
-         throw new error.AuthorizationError(result.status, 'REGISTRATION', result.body);
+      if (resultRequest.status === 400) {
+         throw new error.AuthorizationError(resultRequest.status, 'REGISTRATION', resultRequest.body);
       }
 
       // -----------------------------------------------------------------------
@@ -144,8 +148,8 @@ class Authorization {
 
       const e = new error.ResponseError(
          'ERROR',
-         result.status,
-         result.hash,
+         resultRequest.status,
+         resultRequest.hash,
          'Unexpected behaviour!',
          'Sign Up',
       );

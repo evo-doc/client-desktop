@@ -4,6 +4,7 @@ require('./index.scss');
 const Noty = require('noty');
 const Page = require('Kernel/Page.class');
 const validator = require('Modules/validation.module');
+const error = require('Modules/error.module');
 const template = require('./index.pug');
 
 
@@ -25,18 +26,56 @@ class Index extends Page {
          if (
             this._usernameValidation()
             && this._emailValidation()
-            && this._passwordValidator()
+            && this._passwordValidation()
          ) {
-            // TODO: Send request
             new Noty({
                type: 'success',
+               timeout: 1000,
                text: 'Form submitted.',
             }).show();
+
+            this._sendSignUp();
          }
       });
    }
 
-   _passwordValidator() {
+
+   async _sendSignUp() {
+      const password = document.getElementById('authorization__signup_password').value;
+      const email = document.getElementById('authorization__signup_email').value;
+      const username = document.getElementById('authorization__signup_username').value;
+
+
+      if (
+         !this._usernameValidation(username)
+         || !this._passwordValidation(password)
+         || !this._emailValidation(email)
+      ) { return; }
+
+
+      try {
+         await evodoc
+            .getAPI()
+            .getAuth()
+            .signUp(username, email, password);
+      } catch (e) {
+         // Personal errors
+         // ----------------------------------------------------------------------------------------
+         if (e instanceof error.AuthorizationError) {
+            new Noty({
+               type: 'warning',
+               timeout: 7000,
+               text: 'Username or password is invalid.',
+            }).show();
+         }
+
+         // Global errors
+         // ----------------------------------------------------------------------------------------
+         // if (e instanceof error.RequestError) return;
+      }
+   }
+
+   _passwordValidation() {
       const password = document.getElementById('authorization__signup_password').value;
 
       if (!validator.password(password)) {
