@@ -57,16 +57,11 @@ module.exports = (config, request, utility) => {
                   throw err;
                }));
 
-            it('expects 400 due to missing Authorization header', () => chai.request(config.host)
+            it('expects 422 due to missing Authorization header', () => chai.request(config.host)
                .get('/auth/authenticated')
                .send()
                .then((res) => {
-                  expect(res).to.have.status(400);
-                  expect(res).to.have.header('content-type', 'application/json');
-                  expect(res.body).to.be.an('object');
-                  expect(res.body).to.have.all.keys('message', 'invalid');
-                  expect(res.body.invalid).to.be.an('array');
-                  expect(res.body.invalid).to.include('token');
+                  expect(res).to.have.status(422);
                })
                .catch((err) => {
                   throw err;
