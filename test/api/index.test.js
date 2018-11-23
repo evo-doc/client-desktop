@@ -27,6 +27,12 @@ const method = {
       signup: (username, email, password) => chai.request(config.host)
          .post('/auth/signup')
          .send({ username, email, password }),
+
+      authenticated: token => chai.request(config.host)
+         .get('/auth/authenticated')
+         .set('Authorization', `Bearer ${token}`)
+         .send(),
+
    },
 
    user: {
@@ -72,3 +78,4 @@ describe('CONNECTION', () => {
 
 require('./authentication/signin.test')(config, method, utility);
 require('./authentication/signup.test')(config, method, utility);
+require('./authentication/authenticated.test')(config, method, utility);
