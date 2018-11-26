@@ -1,9 +1,9 @@
 .drag-zone {
    grid-area: drag-zone;
    -webkit-app-region: drag;
-   background: url('../resources/images/logotype.png') no-repeat -3px -123px;
-   background-size: 170px;
-   background-color: var(--color-dark-blue);
+   background: url('../resources/images/logotype.png') no-repeat 0 -71px;
+   background-size: 90px;
+   // background-color: var(--color-dark-blue);
    display: flex;
    justify-content: flex-end;
 
@@ -11,35 +11,11 @@
       -webkit-app-region: no-drag;
       height: 38px;
       line-height: 36px;
-      color: var(--color-light-white);
-
-      &_user {
-         padding: 4px 14px 0;
-         letter-spacing: 1px;
-         line-height: 1em;
-
-         font: {
-            size: 13px;
-         }
-
-         span {
-            display: block;
-            text-align: right;
-            margin-bottom: 1px;
-
-            font: {
-               size: 9px;
-               weight: 200;
-               style: italic;
-            }
-         }
-      }
 
       &_logotype {
          width: $g5;
-         background: url('../resources/images/logotype.png') center center
-            no-repeat;
-         background-size: auto $g3;
+         background: url('../resources/images/logotype.png') left bottom no-repeat;
+         background-size: 80px;
       }
    }
 }

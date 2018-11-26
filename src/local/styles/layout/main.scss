@@ -1,10 +1,21 @@
 main {
    grid-area: main;
-   padding: $g8 $g5;
-   overflow-x: hidden;
+   padding: $g5 $g10 $g10;
+   // overflow-x: hidden;
    overflow-y: scroll;
 
-   > :first-child {
-      margin-top: 0 !important;
+   * {
+      box-sizing: border-box;
    }
+}
+::-webkit-scrollbar {
+   display: none;
+}
+
+#render_main > :first-child {
+   margin-top: 0 !important;
+}
+
+#render_main > :last-child {
+   margin-bottom: 0 !important;
 }

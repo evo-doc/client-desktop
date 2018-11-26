@@ -8,13 +8,14 @@ html
    body
       .layout
          .drag-zone
-            .drag-zone__item.drag-zone__item_user
-               span logged as
-               #username Charlotte White
+            //- .drag-zone__item.drag-zone__item_user
+            //-    span logged as
+            //-    #username Charlotte White
             .drag-zone__item.drag-zone__item_logotype
          nav.sidebar.sidebar_left
             include /components/sidebar-left/index.pug
-         main#render_main
+         main
+            #render_main
          aside.sidebar.sidebar_information
          nav.sidebar.sidebar_right
             include /components/sidebar-right/index.pug

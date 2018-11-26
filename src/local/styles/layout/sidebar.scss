@@ -1,5 +1,6 @@
 nav.sidebar {
-   background-color: var(--color-light-white);
+   // background-color: var(--color-light-white);
+   z-index: 50;
 }
 
 @import './sidebar/*';

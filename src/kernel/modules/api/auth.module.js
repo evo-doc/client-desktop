@@ -42,7 +42,6 @@ class Authorization {
          this.saveUsername(resultData.username);
 
          localStorage.setItem('development', 'true');
-         document.getElementById('username').innerHTML = resultData.username;
          evodoc.getRouter().load('/');
          return true;
       }
@@ -78,7 +77,6 @@ class Authorization {
          //
          evodoc.getRouter().load('/');
          localStorage.setItem('development', 'false');
-         document.getElementById('username').innerHTML = resultData.username;
          return true;
       }
 
@@ -132,7 +130,6 @@ class Authorization {
          this.saveToken(resultData.token);
          this.saveUsername(resultData.username);
 
-         document.getElementById('username').innerHTML = resultData.username;
          evodoc.getRouter().load('/');
          return;
       }
