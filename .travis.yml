@@ -8,13 +8,17 @@ cache:
       - node_modules
 script:
    - yarn mocha:application
-   - yarn packager:mac
+
+before_deploy:
+   - sh 'bin/travis-deploy.sh'
 
 deploy:
    provider: releases
    api_key:
       secure: 'GGOx91GJOSQ1dkguH89CZgm1cAxKfbqUrMu3Nmhq58/EoKEKnUkupxE56KMER9dJCIlLnlngAofh51eUQ6J49VqRXu/0fR6X7XP1QS04w0dAfFGCTLWUUOOFSq180vZ4cxugu/yx/Vly4C1J8BdfC8eYoSfyGHX8LV2lIn+AMTepw0fykEQ69i13JOvslQr/JruTiZnZoxNOhAyyYJbUbAQNHHmWN/uHW9qLkefBvF8ZhZ5ful8AqVt9/+pLcvfZdgonxEU2umWSqVchArsxNLeK5kUf3QLKjTzjw8sRmPMIRCTbN1gtJOA7r0Lfzh8LAjjh3LS08CFjtEgbt5nBn3Q2lICjhPFwzJ5RMJBmTA9LAR6WlFp5lBWCPO3NdKFQEb2lkjBWFLzgX6Bnwh/y7YehyUhJRAvRO/nl377dnXo+5VtB3U75jdnzKZqfwRDJCFqKq3/Bvba5L6iFAybkZwPLrFWv/bPXPdIFd/E6xQBsVkFfapmRKkCWYdd348jbYjwMpOlapxMTGsWe7m196069OqUN0aue3GID13hu3NdGx7M6z+6qzZkKtpGI9JTtWHM9P7VlLwRWUi7vJEgh9OWPkBJoC6XCyYwZCkOAkeLEAPWRHFinvLXabivTMRKEERFs218TEIaTGWukRHT75gt8G8mrtTp6wC2qsHj/vm4='
-   file: './release/EvoDoc-darwin-x64/EvoDoc.app'
+   file:
+      - 'release/EvoDoc-macOS-x64.tar.gz'
+      - 'release/EvoDoc-linux-x64.tar.gz'
    skip_cleanup: true
    on:
       tags: true
