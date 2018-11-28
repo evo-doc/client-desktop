@@ -10,6 +10,14 @@ class Index extends Page {
    constructor(args, config) {
       super(args, config);
       this._template = template;
+
+      this._sidebarButtons = [
+         {
+            link: '/projects/create',
+            icon: 'plus',
+            name: 'Create a Project',
+         },
+      ];
    }
 
    __render() {

@@ -10,6 +10,14 @@ class Index extends Page {
    constructor(args, config) {
       super(args, config);
       this._template = template;
+
+      this._sidebarButtons = [
+         {
+            link: '/profile/edit',
+            icon: 'edit',
+            name: 'Settings',
+         },
+      ];
    }
 
    __render() {

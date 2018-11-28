@@ -1,7 +1,7 @@
 .search {
    // border: 1px inset var(--color-light-gray);
 
-   border-radius: 38px 38px 18px 18px;
+   border-radius: 50px;
    height: $g5;
    overflow: hidden;
    margin: $g5 0;
@@ -17,7 +17,7 @@
       flex: 0 0 auto;
       padding: 0 $g2 0 $g3;
       color: white;
-      line-height: 40px;
+      line-height: 41px;
       text-transform: uppercase;
    }
 
@@ -26,7 +26,7 @@
       // border: 2px solid #aadcf1;
       border-left: 0;
       // background-color: var(--color-light-gray);
-      border-radius: 0 38px 18px 0;
+      // border-radius: 0 38px 18px 0;
       height: 40px;
       display: block;
       flex: 1 1 0;

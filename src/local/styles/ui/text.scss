@@ -17,13 +17,24 @@ h1 {
       size: 24px;
    }
 
-   margin: $g5 0;
+   margin: $g5 0 $g3;
+   min-height: 40px;
+   line-height: 40px;
 }
 
 h2 {
    font: {
       weight: 400;
       size: 20px;
+   }
+
+   margin: $g5 0 $g2;
+}
+
+h2 {
+   font: {
+      weight: 400;
+      size: 18px;
    }
 
    margin: $g5 0 $g2;
@@ -40,4 +51,8 @@ p {
 ul,
 ol {
    margin: 0;
+}
+
+.img {
+   margin: $g4 0;
 }

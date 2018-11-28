@@ -1,50 +1,57 @@
 h1 Profile
 
-img(src="https://www.gravatar.com/avatar/00000000000000046540000000001000?d=identicon&f=y")
+.profile
+   .profile__info
 
-ul
-   li Username: evodoc
-   li Name: Charlotte White
-   li Email: example@example.com
-   li Twitter: evodoc
-   li github: evodoc
+      img.profile__avatar(src="https://www.gravatar.com/avatar/00000000000000046540000000001000?d=identicon&f=y&s=180")
 
-a.button(href="/profile/edit") Edit Account
+      .profile__username evodoc
+      .profile__name Charlotte White
+      .profile__email 
+         i.fas.fa-envelope envelope
+         | 
+         | example@example.com
+      .profile__twitter
+         i.fab.fa-github github
+         | 
+         | evodoc
+      .profile__github
+         i.fab.fa-twitter twitter
+         | 
+         | evodoc
 
-h1 Packages
+   .profile__items
 
-
-.list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/package/package-name-" + n + "/view")
-         .list__header
-            .list__header-left
-               .list__title= 'username/package-name-' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag.tag_owner owner
-                  .tag.tag_version v58.1.9632
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
-
-
-a.button(href="/packages/view") View all packages
-
-h1 Projects
-
-.list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/project/project-name-" + n + "/view")
-         .list__header
-            .list__header-left
-               .list__title= 'Project Name ' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag.tag_owner owner
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+      .list
+         - var n = 0;
+         while n < 4
+            a.list__item(href="/package/package-name-" + n + "/view")
+               .list__header
+                  .list__header-left
+                     .list__title= 'username/package-name-' + n++
+                  .list__header-right
+                     .list__labels.tags
+                        .tag.tag_owner owner
+                        .tag.tag_version v58.1.9632
+               .list__description
+                  | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
 
 
-a.button(href="/projects/view") View all projects
+      a.button(href="/packages/view") View all packages
+
+
+      .list
+         - var n = 0;
+         while n < 4
+            a.list__item(href="/project/project-name-" + n + "/view")
+               .list__header
+                  .list__header-left
+                     .list__title= 'Project Name ' + n++
+                  .list__header-right
+                     .list__labels.tags
+                        .tag.tag_owner owner
+               .list__description
+                  | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+
+
+      a.button(href="/projects/view") View all projects

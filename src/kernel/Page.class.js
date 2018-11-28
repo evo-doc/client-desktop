@@ -5,6 +5,7 @@ const error = require('Modules/error.module');
 const configRouter = require('Configs/router.config');
 const components = require('Local/components');
 const templateDefault = require('Src/index.default.pug');
+const sidebarButton = require('Components/sidebar-button/index.pug');
 
 class Page {
    /**
@@ -29,6 +30,8 @@ class Page {
       // Unique (redefine in instances)
       this._template = null;
       this._ajaxData = null;
+
+      this._sidebarButtons = [];
 
       this.init();
    }
@@ -81,6 +84,9 @@ class Page {
          throw new error.RenderError(this._args[0]);
       }
 
+      this.__sidebarRemove();
+      this.__sidebarUpdate();
+
       // Handlers
       this.__handlers();
 
@@ -128,6 +134,21 @@ class Page {
       log.warn('Page: Handlering process __handlers is default.');
    }
 
+
+   __sidebarRemove() {
+      document.querySelector('.sidebar_right .sidebar__buttons').innerHTML = '';
+   }
+
+   __sidebarUpdate() {
+      const container = document.querySelector('.sidebar_right .sidebar__buttons');
+      this._sidebarButtons.forEach((element) => {
+         container.innerHTML += sidebarButton({
+            link: element.link || '/error/404',
+            icon: element.icon || 'question',
+            name: element.name || 'unknown',
+         });
+      });
+   }
 
    // ----------------------------------------------------------------------------------------------
    // Private functions
