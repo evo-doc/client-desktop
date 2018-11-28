@@ -19,7 +19,6 @@ class Application {
    constructor() {
       this._router = null;
       this._localization = null;
-      this._request = null;
       this._api = null;
    }
 
