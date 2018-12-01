@@ -299,3 +299,75 @@ yarn mocha:all          # run all tests
 yarn mocha:api          # run only API tests
 yarn mocha:application  # run only app tests
 ```
+
+## API requests
+
+There are 3 main places from which we can call an API request - Router, Page rendering process and Page itself.
+
+The default structure of handling responses from the server is `(CALL)─(API-MODULE)─(CONNECT)` where individual nodes are:
+
+-  `CONNECT`
+   -  `./src/kernel/modules/connect.module.js`
+   -  provides different types of `fetch` with user token and other necessary data (an interface of getJSON, postJSON, etc.)
+   -  handles global errors (without redirections)
+-  `API-MODULE`
+   -  `./src/kernel/modules/api/*.module.js`
+   -  provides an API interface for logical groups of request
+   -  handles individual save/remove events (without redirects)
+-  `CALL`
+   -  `evodoc.getAPI().getModule().method({...options})`
+   -  a request in a `try-catch` block
+   -  the `catch` section handles all redirects (e.g. a redirect after unauthorised error) and individual behavior (e.g. a notification about wrong password)
+
+An API call visualisation:
+
+```
+.Router
+   ├─(CALL)─(API-MODULE)─(CONNECT) (1)
+   └─ Page rendering
+      └─(CALL)─(API-MODULE)─(CONNECT) (2)
+
+.Page
+   └─(CALL)─(API-MODULE)─(CONNECT) (3)
+```
+
+Detailed communication:
+
+```
+(1) Router call <- (return|throw) <- Module <- (return|throw) <- Connect
+(2) Router <- (throw) <- Page rendering call <- (return|throw) <- Module <- (return|throw) <- Connect
+(3) Page call <- (return|throw) <- Module <- (return|throw) <- Connect
+```
+
+### Custom Response codes
+
+1000 - No internet connection
+
+### API call example
+
+```js
+// Modules
+const connect = require('Modules/connect.module');
+const errorAuth = require('Modules/api/auth.error');
+
+try {
+   // Call
+   await evodoc
+      .getAPI()
+      .getAuth()
+      .signIn({...});
+
+   // Redirect
+   evodoc.getRouter().load("/");
+} catch (e) {
+   // Error handling
+   if (e instanceof errorAuth.InvalidAuthDataError) {
+      new Noty({
+         text: 'Login or password is invalid.',
+      }).show();
+      return;
+   }
+
+   connect.processOtherErrors(e);
+}
+```
