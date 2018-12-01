@@ -1,7 +1,15 @@
 const Storage = require('Modules/storage.module');
 const log = require('Modules/logger.app.module');
 const connect = require('Modules/connect.module');
-const error = require('Modules/error.module');
+const randomstring = require('randomstring');
+
+// Error objects
+const errorConnect = require('Modules/connect.error');
+const errorAuth = require('Modules/api/auth.error');
+
+// Mock
+const ResponseObject = require('Kernel/ResponseObject.class');
+const mockData = require('./auth.mock.json');
 
 class Authorization {
    /**
@@ -24,40 +32,37 @@ class Authorization {
    }
 
 
-   async signIn(username, password) {
+   async signIn(login, password) {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
 
-      if (username === 'offline' && password === 'offlineTest0') {
-         log.debug('[000] OFFLINE TESTING ACTIVE');
-         // Received data placeholder
-         const resultData = {
-            token: '00000000000',
-            username: 'TEST MODE',
-         };
+      if (login === 'offline' && password === 'offlineTest0') {
+         log.debug('[000] Offline testing active');
+         // Mock response
+         const resMockData = mockData.signIn;
+         const hash = randomstring.generate(32);
 
          // Save data
-         this.saveToken(resultData.token);
-         this.saveUsername(resultData.username);
-
+         this.saveToken(resMockData.token);
+         this.saveUsername(resMockData.username);
          localStorage.setItem('development', 'true');
-         evodoc.getRouter().load('/');
-         return true;
+
+         return new ResponseObject(`dev-${hash}`, 200, resMockData);
       }
 
       // -------------------------------------------------------------------------------------------
-      // Regular mode
+      // Production mode
       // -------------------------------------------------------------------------------------------
 
-      let resultRequest;
+      let res;
       try {
-         resultRequest = await connect.postJSON('/auth/signin', {
-            login: username,
+         res = await connect.postJSON('/auth/signin', {
+            login,
             password,
          });
-      } catch (e) {
-         throw e;
+      } catch (globalError) {
+         throw globalError;
       }
 
 
@@ -66,40 +71,35 @@ class Authorization {
       // -----------------------------------------------------------------------
 
       // Response: 200
-      if (resultRequest.status === 200) {
-         log.info(`[200] User "${username}" was signed in!`);
+      if (res.code === 200) {
+         log.info(`[200] User "${login}" was signed in!`);
 
          // Save data
-         const resultData = resultRequest.body;
-         this.saveToken(resultData.token);
-         this.saveUsername(resultData.username);
+         this.saveToken(res.body.token);
+         this.saveUsername(res.body.username);
 
-         //
-         evodoc.getRouter().load('/');
+         // Preventive
          localStorage.setItem('development', 'false');
          return true;
       }
 
       // Throw local errors
-      if (resultRequest.status === 400) {
-         throw new error.AuthorizationError(resultRequest.status, 'SIGN IN', resultRequest.body);
+      if (res.code === 400) {
+         throw new errorAuth.InvalidAuthDataError(
+            res.hash, res.code, res.body,
+            'Sign In data are invalid',
+         );
       }
 
 
       // -----------------------------------------------------------------------
-      // UB
+      // Unexpected Behaviour
       // -----------------------------------------------------------------------
 
-      const e = new error.ResponseError(
-         'ERROR',
-         resultRequest.status,
-         resultRequest.hash,
-         'Unexpected behaviour!',
-         'Sign In',
+      throw new errorConnect.UnexpectedError(
+         res.hash, res.code, res.body,
+         'UB in sign in process',
       );
-
-      evodoc.getRequest().redirect('/error/000');
-      throw e;
    }
 
 
@@ -108,15 +108,15 @@ class Authorization {
       // Regular mode
       // -------------------------------------------------------------------------------------------
 
-      let resultRequest;
+      let res;
       try {
-         resultRequest = await connect.postJSON('/auth/signup', {
+         res = await connect.postJSON('/auth/signup', {
             username,
             password,
             email,
          });
-      } catch (e) {
-         throw e;
+      } catch (globalError) {
+         throw globalError;
       }
 
       // -----------------------------------------------------------------------
@@ -124,34 +124,74 @@ class Authorization {
       // -----------------------------------------------------------------------
 
       // 200
-      if (resultRequest.status === 200) {
+      if (res.code === 200) {
          log.info(`[200] User "${username}" was successfully registered!`);
-         const resultData = resultRequest.body;
-         this.saveToken(resultData.token);
-         this.saveUsername(resultData.username);
 
-         evodoc.getRouter().load('/');
-         return;
+         // Global events - save data, etc.
+         this.saveToken(res.body.token);
+         this.saveUsername(res.body.username);
+
+         return res;
       }
 
       // 400
-      if (resultRequest.status === 400) {
-         throw new error.AuthorizationError(resultRequest.status, 'REGISTRATION', resultRequest.body);
+      if (res.code === 400) {
+         throw new errorAuth.InvalidAuthDataError(
+            res.hash, res.code, res.body,
+            'Sign Up data are invalid',
+         );
       }
 
       // -----------------------------------------------------------------------
-      // UB
+      // Unexpected Behaviour
       // -----------------------------------------------------------------------
 
-      const e = new error.ResponseError(
-         'ERROR',
-         resultRequest.status,
-         resultRequest.hash,
-         'Unexpected behaviour!',
-         'Sign Up',
+      throw new errorConnect.UnexpectedError(
+         res.hash, res.code, res.body,
+         'UB in sign up process',
       );
-      evodoc.getRequest().redirect('/error/000');
-      throw e;
+   }
+
+
+   async isAuthenticated() {
+      // -------------------------------------------------------------------------------------------
+      // Developer mode
+      // -------------------------------------------------------------------------------------------
+
+      if (localStorage.getItem('development') === 'true') {
+         const hash = randomstring.generate(32);
+         const resMockData = mockData.authenticated;
+         return new ResponseObject(`dev-${hash}`, 200, resMockData);
+      }
+
+      // -------------------------------------------------------------------------------------------
+      // Regular mode
+      // -------------------------------------------------------------------------------------------
+
+      let res;
+      try {
+         res = await connect.getJSON('/auth/authenticated');
+      } catch (globalError) {
+         throw globalError;
+      }
+
+      // -----------------------------------------------------------------------
+      // Possible results
+      // -----------------------------------------------------------------------
+
+      if (res.code === 200) {
+         log.trace('[200] : Current user is authorized.');
+         return res;
+      }
+
+      // -----------------------------------------------------------------------
+      // Unexpected Behaviour
+      // -----------------------------------------------------------------------
+
+      throw new errorConnect.UnexpectedError(
+         res.hash, res.code, res.body,
+         'UB in sign up process',
+      );
    }
 
 
@@ -166,64 +206,9 @@ class Authorization {
    }
 
 
-   async isAuthenticated() {
-      // -------------------------------------------------------------------------------------------
-      // Developer mode
-      // -------------------------------------------------------------------------------------------
-
-      if (localStorage.getItem('development') === 'true') {
-         return true;
-      }
-
-      // -------------------------------------------------------------------------------------------
-      // Regular mode
-      // -------------------------------------------------------------------------------------------
-
-      let resultRequest;
-      try {
-         resultRequest = await connect.getJSON('/auth/authenticated');
-      } catch (e) {
-         throw e;
-      }
-
-      // -----------------------------------------------------------------------
-      // Possible results
-      // -----------------------------------------------------------------------
-
-      if (resultRequest.status === 200) {
-         log.trace('[200] [IS AUTHORIZED]: Current user is authorized.');
-         return true;
-      }
-
-      // -----------------------------------------------------------------------
-      // UB
-      // -----------------------------------------------------------------------
-
-      const e = new error.ResponseError(
-         'ERROR',
-         resultRequest.status,
-         resultRequest.hash,
-         'Unexpected behaviour!',
-         'is authorized check',
-      );
-      evodoc.getRequest().redirect('/error/000');
-      throw e;
-   }
-
-
    // ----------------------------------------------------------------------------------------------
-   // Private help methods
+   // Helpers
    // ----------------------------------------------------------------------------------------------
-
-   /**
-    * @summary Get user ID from his token
-    * @param {string} token - User token
-    * @returns {number} Parsed user ID
-    */
-   _getUserId() {
-      return +this.getToken().substr(0, 10) || -1;
-   }
-
 
    getToken() {
       return this._storage.getData('token');

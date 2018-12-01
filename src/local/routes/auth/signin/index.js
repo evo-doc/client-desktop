@@ -1,10 +1,14 @@
-// Stylesheet
-require('./index.scss');
-
+// Modules
 const Noty = require('noty');
 const Page = require('Kernel/Page.class');
 const validator = require('Modules/validation.module');
-const error = require('Modules/error.module');
+const connect = require('Modules/connect.module');
+
+// Errors
+const errorAuth = require('Modules/api/auth.error');
+
+// Files
+require('./index.scss');
 const template = require('./index.pug');
 
 
@@ -25,9 +29,6 @@ class Index extends Page {
          evt.preventDefault();
          this._sendSignIn();
       });
-
-      // authorization__form_signin-login
-      // authorization__form_signin-password
    }
 
    async _sendSignIn() {
@@ -45,20 +46,18 @@ class Index extends Page {
             .getAPI()
             .getAuth()
             .signIn(login, password);
+         evodoc.getRouter().load('/');
       } catch (e) {
-         // Personal errors
-         // ----------------------------------------------------------------------------------------
-         if (e instanceof error.AuthorizationError) {
+         if (e instanceof errorAuth.InvalidAuthDataError) {
             new Noty({
-               type: 'warning',
+               type: 'error',
                timeout: 7000,
-               text: 'Username or password is invalid.',
+               text: 'Login or password is invalid.',
             }).show();
+            return;
          }
 
-         // Global errors
-         // ----------------------------------------------------------------------------------------
-         // if (e instanceof error.RequestError) return;
+         connect.processOtherErrors(e);
       }
    }
 

@@ -1,0 +1,16 @@
+{
+  "signUp": {
+    "token": "00000000-0000-0000-0000-000000000000",
+    "username": "dev-mode"
+  },
+  "signIn": {
+    "token": "00000000-0000-0000-0000-000000000000",
+    "username": "dev-mode"
+  },
+  "signOut": {
+    "message": "User signed out."
+  },
+  "authenticated": {
+    "message": "User is authenticated."
+  }
+}

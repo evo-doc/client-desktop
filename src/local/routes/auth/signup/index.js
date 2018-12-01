@@ -1,10 +1,14 @@
-// Stylesheet
-require('./index.scss');
-
+// Modules
 const Noty = require('noty');
 const Page = require('Kernel/Page.class');
 const validator = require('Modules/validation.module');
-const error = require('Modules/error.module');
+const connect = require('Modules/connect.module');
+
+// Errors
+const errorAuth = require('Modules/api/auth.error');
+
+// Files
+require('./index.scss');
 const template = require('./index.pug');
 
 
@@ -58,20 +62,35 @@ class Index extends Page {
             .getAPI()
             .getAuth()
             .signUp(username, email, password);
+         evodoc.getRouet().load('/');
       } catch (e) {
-         // Personal errors
-         // ----------------------------------------------------------------------------------------
-         if (e instanceof error.AuthorizationError) {
-            new Noty({
-               type: 'warning',
-               timeout: 7000,
-               text: 'Username or password is invalid.',
-            }).show();
+         if (e instanceof errorAuth.InvalidAuthDataError) {
+            if (e.body.invalid.indexOf('username')) {
+               new Noty({
+                  type: 'error',
+                  timeout: 7000,
+                  text: 'Username is invalid or non-unique.',
+               }).show();
+            }
+
+            if (e.body.invalid.indexOf('email')) {
+               new Noty({
+                  type: 'error',
+                  timeout: 7000,
+                  text: 'Email is invalid or non-unique.',
+               }).show();
+            }
+
+            if (e.body.invalid.indexOf('password')) {
+               new Noty({
+                  type: 'error',
+                  timeout: 7000,
+                  text: 'Password is invalid.',
+               }).show();
+            }
          }
 
-         // Global errors
-         // ----------------------------------------------------------------------------------------
-         // if (e instanceof error.RequestError) return;
+         connect.processOtherErrors(e);
       }
    }
 

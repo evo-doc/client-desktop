@@ -2,34 +2,38 @@ const log = require('Modules/logger.app.module');
 const logapi = require('Modules/logger.api.module');
 const config = require('Configs/server.config.json');
 const randomstring = require('randomstring');
-const error = require('Modules/error.module');
+
+const errorConnect = require('Modules/connect.error');
+const ResponseObject = require('Kernel/ResponseObject.class');
 
 
 /**
  * @summary Global errors detection
  * @description Check global erros e.g. invalid token, data consistency etc.
- * @param {string} status - Response status
+ * @param {string} code - Response status
  * @param {string} body - Bosy of the response
  * @param {string} hash - A hash of the transaction.
  */
-function checkGlobal(status, body, hash) {
+function checkGlobalError(hash, code, body) {
    log.trace('Connect: Checking global errors');
 
    // Server unavailable
-   if (status >= 500) {
-      const e = new error.ResponseError('ERROR', status, hash, 'Server unavailable!', 'Global');
-      evodoc.getRouter().redirect('/error/500');
-      return e;
+   if (code >= 500) {
+      return new errorConnect.ResponseError(
+         hash, code, body,
+         'ERROR', 'Server unavailable!',
+      );
    }
 
    // HTML body
    if (body === 'HTML') {
-      const e = new error.ResponseError('ERROR', status, hash, 'Cannot parse JSON!', 'Global');
-      evodoc.getRouter().redirect('/error/500');
-      return e;
+      return new errorConnect.ResponseError(
+         hash, 500, body,
+         'ERROR', 'Cannot parse JSON!',
+      );
    }
 
-   // New possible token
+   // Detect new possible token
    if (Object.prototype.hasOwnProperty.call(body, 'token')) {
       evodoc.getAPI()
          .getAuth()
@@ -37,103 +41,98 @@ function checkGlobal(status, body, hash) {
    }
 
    // 404
-   if (status === 404) {
-      const e = new error.ResponseError('ERROR', status, hash, 'URL does not exist!', 'Global');
-      evodoc.getRouter().redirect('/error/404');
-      return e;
+   if (code === 404) {
+      return new errorConnect.ResponseError(
+         hash, code, body,
+         'ERROR', 'URL does not exist!',
+      );
    }
 
    // 401
-   if (status === 401) {
-      const e = new error.ResponseError('WARN', status, hash, 'Missing or outdated token!', 'Global');
-      evodoc.getRouter().redirect('/auth/signin');
-      return e;
+   if (code === 401) {
+      return new errorConnect.ResponseError(
+         hash, code, body,
+         'WARN', 'Missing or outdated token!',
+      );
+   }
+
+   // 422
+   if (code === 422) {
+      return new errorConnect.ResponseError(
+         hash, code, body,
+         'ERROR', 'User request is missing some data.',
+      );
    }
 
    return false;
 }
 
 
-// /**
-//  * @summary Get all responses from requests
-//  * @description Wait for all fetch promises and parse their json responses
-//  * @param {Promise} [...arguments] - fetch promises
-//  *
-//  * @return {Array} An array of JSON responses (in the same order, as arguments)
-//  */
-// module.exports.waitAJAX = function () {
-// return Promise.all([...arguments])
-//    .then(responses => Promise.all(responses.map(res => res.json())));
-// };
-
-
 /**
  * @summary GET request
  * @description Prepare and send GET request to the server. Responce should be JSON.
  *
- * @param {string} url - Requested URL without GET params
- * @param {Object} body - Objects of pairs {key: value} which represents GET params
- * @param {Object} [optionsUser={}] - User defined fetch options
+ * @param {string} reqPath - Requested URL without GET params
+ * @param {Object} reqBody - Objects of pairs {key: value} which represents GET params
+ * @param {Object} [reqOptionsUser={}] - User defined fetch options
  *
  * @return {Promise}
  */
-module.exports.getJSON = async (url, body = {}, optionsUser = {}) => {
+module.exports.getJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => {
    // Unique ID
    const hash = randomstring.generate(32);
 
    // Prepare URL get request
    const euc = encodeURIComponent;
-   const getURL = Object.keys(body)
-      .map(key => `${euc(key)}=${euc(body[key])}`)
+   const getURL = Object.keys(reqBody)
+      .map(key => `${euc(key)}=${euc(reqBody[key])}`)
       .join('&');
 
    // Prepare & merge fetch options
-   const optionsDefault = {
+   const reqOptionsDefault = {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',
          Authorization: `Bearer ${evodoc.getAPI().getAuth().getToken()}`,
       },
    };
-   const options = Object.assign({}, optionsDefault, optionsUser);
-   const requestedURL = `${config.host}${url}?${getURL}`;
+   const reqOptions = Object.assign({}, reqOptionsDefault, reqOptionsUser);
+   const reqURL = `${config.host}${reqPath}?${getURL}`;
 
 
    // Send request
    let response;
    try {
-      response = await fetch(requestedURL, options);
+      response = await fetch(reqURL, reqOptions);
    } catch (e) {
       if (e instanceof TypeError && e.message === 'Failed to fetch') {
-         evodoc.getRouter().redirect('/error/001');
-         throw new error.InternetConnectionError();
+         throw new errorConnect.ResponseError(
+            hash, 1000, {},
+            'WARN', 'No internet connection.',
+         );
       }
    }
 
    const { status, statusText } = response;
-   const json = await response
+   const body = await response
       .json()
       .then(_ => _)
-      .catch(_ => 'HTML' || _);
+      .catch(() => 'HTML');
 
    logapi(
       hash,
       // Requset
-      options.method,
-      requestedURL,
-      'see URL',
+      reqOptions.method, reqURL, 'see URL',
       // Response
-      status,
-      statusText,
-      json,
+      status, statusText, body,
    );
 
    // Check global errors
-   const isGlobalErrorResult = checkGlobal(status, json, hash);
+   const isGlobalErrorResult = checkGlobalError(hash, status, body);
    if (isGlobalErrorResult !== false) throw isGlobalErrorResult;
 
    // Success
-   return { status, body: json, hash };
+   return new ResponseObject(hash, status, body);
 };
 
 
@@ -141,67 +140,88 @@ module.exports.getJSON = async (url, body = {}, optionsUser = {}) => {
  * @summary POST request
  * @description Prepare and send POST request to the server. Responce should be JSON.
  *
- * @param {string} url - Requested URL without GET params
- * @param {Object} body - Objects of pairs {key: value} which represents POST params
- * @param {Object} [optionsUser={}] - User defined fetch options
+ * @param {string} reqPath - Requested URL without GET params
+ * @param {Object} reqBody - Objects of pairs {key: value} which represents POST params
+ * @param {Object} [reqOptionsUser={}] - User defined fetch options
  *
  * @return {(object|error)}
  */
-module.exports.postJSON = async (url, body = {}, optionsUser = {}) => {
+module.exports.postJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => {
    log.trace('Connect: postJSON called.');
    // Unique request ID (for logs)
    const hash = randomstring.generate(32);
-
    const token = evodoc.getAPI().getAuth().getToken();
 
    // Prepare & merge fetch options
-   const optionsDefault = {
+   const reqOptionsDefault = {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(reqBody),
       headers: {
          'Content-Type': 'application/json',
          Authorization: `Bearer ${token}`,
       },
    };
-
-
-   const options = Object.assign({}, optionsDefault, optionsUser);
-   const requestedURL = `${config.host}${url}`;
+   const reqOptions = Object.assign({}, reqOptionsDefault, reqOptionsUser);
+   const reqURL = `${config.host}${reqPath}`;
 
    // Send request
    let response;
    try {
-      response = await fetch(requestedURL, options);
+      response = await fetch(reqURL, reqOptions);
    } catch (e) {
       if (e instanceof TypeError && e.message === 'Failed to fetch') {
-         evodoc.getRouter().redirect('/error/001');
-         throw new error.InternetConnectionError();
+         throw new errorConnect.ResponseError(
+            hash, 1000, {},
+            'WARN', 'No internet connection.',
+         );
       }
    }
 
-
    const { status, statusText } = response;
-   const json = await response
+   const body = await response
       .json()
       .then(_ => _)
-      .catch(_ => 'HTML' || _);
+      .catch(() => 'HTML');
+
+   // Security fix :)
+   let reqBodyPrivate = reqBody;
+   if (reqPath.indexOf('auth/') === 1) {
+      reqBodyPrivate = { key: 'Request body data are hidden due to privacy.' };
+   }
 
    logapi(
       hash,
       // Requset
-      options.method,
-      requestedURL,
-      body,
+      reqOptions.method, reqURL, reqBodyPrivate,
       // Response
-      status,
-      statusText,
-      json,
+      status, statusText, body,
    );
 
    // Check global errors
-   const isGlobalErrorResult = checkGlobal(status, json, hash);
+   const isGlobalErrorResult = checkGlobalError(hash, status, body);
    if (isGlobalErrorResult !== false) throw isGlobalErrorResult;
 
    // Success
-   return { status, body: json, hash };
+   return new ResponseObject(hash, status, body);
+};
+
+
+/**
+ * @summary
+ * @description API responses always throw a few common errors (Global error, UB error, ...).
+ * This function is shared between all files that need to validate a response.
+ */
+module.exports.processOtherErrors = (e) => {
+   if (e instanceof errorConnect.ResponseError) {
+      this.route(`/error/${e.code}`);
+      return;
+   }
+
+   if (e instanceof errorConnect.UnexpectedError) {
+      this.route('/error/666');
+      return;
+   }
+
+   log.error('Impossible error');
+   this.route('/error/999');
 };

@@ -1,6 +1,8 @@
+- var link = error.code == 401 ? '/auth/signin' : '/';
+
 .error-page
    .error-page__inner
       h1 #{error.code}
       p #{error.message}
 
-      a(href="/") ◀︎ return to the safe zone
+      a(href=link) ◀︎ return to the safe zone

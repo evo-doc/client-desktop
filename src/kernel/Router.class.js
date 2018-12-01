@@ -2,6 +2,9 @@
 const log = require('Modules/logger.app.module');
 const error = require('Modules/error.module');
 
+// Error objects
+const errorConnect = require('Modules/connect.error');
+
 // Other dependencies
 const configRouter = require('Configs/router.config.js');
 const routeCollector = require('Local/routes');
@@ -160,8 +163,18 @@ class Router {
                .getAuth()
                .isAuthenticated();
          } catch (e) {
-            log.debug('Route Process');
-            return; // Stop routing, error from isAuthenticated called new redirect
+            if (e instanceof errorConnect.ResponseError) {
+               this.route(`/error/${e.code}`);
+               return;
+            }
+            if (e instanceof errorConnect.UnexpectedError) {
+               this.route('/error/666');
+               return;
+            }
+
+            log.error('Impossible router error');
+            this.route('/error/999');
+            return;
          }
       } else {
          log.trace(`Router: Page ${path} is auth free`);
@@ -184,9 +197,9 @@ class Router {
          log.trace('Router: load() page crashed');
          // Stop routing, error from load called new redirect
       }
-      log.debug('Page creation');
+      log.debug('Page creation end');
 
-      log.debug('Route Process');
+      log.debug('Route Process end');
    }
 
    /**
