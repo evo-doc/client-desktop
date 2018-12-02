@@ -1,6 +1,9 @@
 <img align="right" width="100px" src="https://raw.githubusercontent.com/evo-doc/client-desktop/master/src/local/resources/images/logotype.png">
 
-# EvoDoc v2
+# EvoDoc / Desktop client for macOS, linux, windows
+[![Build Status](https://travis-ci.org/evo-doc/client-desktop.svg?branch=master)](https://travis-ci.org/evo-doc/client-desktop)
+[![Library](https://img.shields.io/badge/library-electronjs-blue.svg)](https://electronjs.org)
+![Dependencies](https://david-dm.org/evo-doc/client-desktop.svg)
 
 A desktop client for macOS, linux and windows. Based on [Electron](https://electronjs.org). [Webpack](http://webpack.js.org) is used as an app bundler. A stylesheet language is [SCSS](https://sass-lang.com), template engine – [PugJS](https://pugjs.org/).
 
