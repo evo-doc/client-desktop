@@ -27,7 +27,7 @@ module.exports.ResponseError = class ResponseError extends Error {
 
 
 /**
- * @summary Unexxpected Behaviour
+ * @summary Unexpected Behaviour
  * @description Something went wrong, server respond is too interesting.
  */
 module.exports.UnexpectedError = class UnexpectedError extends Error {
@@ -36,6 +36,27 @@ module.exports.UnexpectedError = class UnexpectedError extends Error {
 
       if (Error.captureStackTrace) {
          Error.captureStackTrace(this, UnexpectedError);
+      }
+
+      this.hash = hash;
+      this.code = code;
+      this.body = body;
+
+      log.error(`[${code}]: ${this.message} (${hash})`);
+   }
+};
+
+
+/**
+ * @summary Limit is invalid
+ * @description limit < 0 OR NaN
+ */
+module.exports.InvalidLimitError = class InvalidLimitError extends Error {
+   constructor(hash, code, body, ...params) {
+      super(...params);
+
+      if (Error.captureStackTrace) {
+         Error.captureStackTrace(this, InvalidLimitError);
       }
 
       this.hash = hash;

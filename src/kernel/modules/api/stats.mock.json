@@ -1,0 +1,13 @@
+{
+  "common": {
+    "users": 42,
+    "packages": 0,
+    "projects": 740
+  },
+  "popularPackages": {
+    "packages": {
+      "label": ["name"],
+      "data": []
+    }
+  }
+}
