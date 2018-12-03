@@ -1,0 +1,31 @@
+{
+  "projectCreate": {
+    "id": "42"
+  },
+  "projectView": {
+    "name": "EvoDoc library",
+    "description": "Praesent ut dictum lectus. Vivamus commodo tortor ut massa convallis, ut tincidunt mi pharetra. Sed lacus tortor, vestibulum ac blandit vitae, vestibulum eget libero. Nam ut mauris diam. Curabitur lobortis nunc massa, sit amet consequat arcu luctus a. Morbi tincidunt augue lorem, vel scelerisque enim suscipit at. ",
+    "collaborators": {
+      "label": ["username", "emailhash", "role"],
+      "data": [
+        ["username-1", "e332a76c29654fcb7f6e6b31ced090c7", "owner"],
+        ["username-2", "6a979aae21c21ea2bb78d86cab5a884b", "writer"]
+      ]
+    }
+  },
+  "projectPatch": {
+    "message": "Project was changed."
+  },
+  "projectDelete": {
+    "message": "Project was deleted."
+  },
+  "addCollaboratorToProject": {
+    "message": "User added."
+  },
+  "patchCollaboratorOfProject": {
+    "message": "User role was updated."
+  },
+  "deleteCollaboratorFromProject": {
+    "message": "User was removed."
+  }
+}
