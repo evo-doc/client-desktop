@@ -206,6 +206,24 @@ module.exports.postJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => 
 };
 
 
+module.exports.patchJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => {
+   const reqOptionsPatch = {
+      method: 'PATCH',
+   };
+   const reqOptionsUserPatch = Object.assign({}, reqOptionsUser, reqOptionsPatch);
+   this.postJSON(reqPath, reqBody, reqOptionsUserPatch);
+};
+
+
+module.exports.deleteJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => {
+   const reqOptionsDelete = {
+      method: 'DELETE',
+   };
+   const reqOptionsUserDelete = Object.assign({}, reqOptionsUser, reqOptionsDelete);
+   this.postJSON(reqPath, reqBody, reqOptionsUserDelete);
+};
+
+
 /**
  * @summary
  * @description API responses always throw a few common errors (Global error, UB error, ...).
