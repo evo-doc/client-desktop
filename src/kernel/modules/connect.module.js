@@ -231,15 +231,15 @@ module.exports.deleteJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) =
  */
 module.exports.processOtherErrors = (e) => {
    if (e instanceof errorConnect.ResponseError) {
-      this.route(`/error/${e.code}`);
+      evodoc.getRouter().load(`/error/${e.code}`);
       return;
    }
 
    if (e instanceof errorConnect.UnexpectedError) {
-      this.route('/error/666');
+      evodoc.getRouter().load('/error/666');
       return;
    }
 
    log.error('Impossible error');
-   this.route('/error/999');
+   evodoc.getRouter().load('/error/999');
 };

@@ -1,6 +1,7 @@
 const log = require('Modules/logger.app.module');
 const loader = require('Modules/loader.module');
 const error = require('Modules/error.module');
+// const errorConnect = require('Modules/error.module');
 
 const configRouter = require('Configs/router.config');
 const components = require('Local/components');
@@ -57,29 +58,19 @@ class Page {
 
       // Data process
       try {
-         this.__ajaxData();
+         await this.__ajaxData();
       } catch (e) {
-         log.error(e.message);
-         // TODO: Ajax Exception
+         // All redirect were already triggered in Page.class, just stop loading
+         log.trace(`Page [FAILURE AJAX]: ${this._args[0]}`);
+         throw new error.RenderError(this._args[0]);
       }
 
       // Render process
       try {
          await this.__render();
       } catch (e) {
-         log.trace(`Page [FAILURE]: ${this._args[0]}`);
+         log.trace(`Page [FAILURE RENDER]: ${this._args[0]}`);
          loader.hide();
-
-         // // We have global error
-         // if (e instanceof error.RequestError) throw e;
-
-         // // We have PageRenderError
-         // if (e instanceof error.PageRenderError) {
-         //    const err = new error.PageLoadError(this._args[0], e.status, e.hash, e.note);
-         //    APP.getRequest().redirect('/error/400');
-         //    throw err;
-         // }
-
          log.error(e.message);
          throw new error.RenderError(this._args[0]);
       }
@@ -117,7 +108,7 @@ class Page {
       });
    }
 
-   __ajaxData() {
+   async __ajaxData() {
       log.warn('Page: Ajax process __ajaxData is default.');
    }
 

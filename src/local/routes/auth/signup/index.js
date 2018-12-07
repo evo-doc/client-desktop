@@ -62,7 +62,7 @@ class Index extends Page {
             .getAPI()
             .getAuth()
             .signUp(username, email, password);
-         evodoc.getRouet().load('/');
+         evodoc.getRouter().load('/');
       } catch (e) {
          if (e instanceof errorAuth.InvalidAuthDataError) {
             if (e.body.invalid.indexOf('username')) {
