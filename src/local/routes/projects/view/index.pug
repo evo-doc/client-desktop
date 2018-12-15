@@ -1,21 +1,36 @@
 h1 User Projects
 p There you can find all your projects or projects where you are stated as a collaborator. You can create a new one with a button on the right sidebar. Any individual actions (edit, remove, etc.) are available inside each project.
 
-.search.search_big
-   label
-      span User Projects
-      input(type="text", name="search" placeholder="Search")
+//- .search.search_big
+//-    label
+//-       span User Projects
+//-       input(type="text", name="search" placeholder="Search")
 
 
 .list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/project/project-name-" + n + "/view")
-         .list__header
-            .list__header-left
-               .list__title= 'username/project-name-' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag.tag_owner owner
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+   if(projects.length === 0)
+      | You have no projects. Maybe you want to 
+      a(href="/projects/create") create
+      |
+      | some?
+   else
+      - var n = 0;
+      while n < projects.length
+         a.list__item(href="/project/" + projects[n][0] + "/view")
+            .list__header
+               .list__header-left
+                  .list__title
+                     if(projects[n][2] != "")
+                        | #{projects[n][2]}
+                     else
+                        | No Project Name
+               .list__header-right
+                  .list__labels.tags
+                     if(projects[n][1] === true)
+                        .tag.tag_owner owner
+            .list__description
+               if(projects[n][3] != "")
+                  | #{projects[n][3]}
+               else
+                  | No Project Name
+         - n++

@@ -20,11 +20,28 @@ class Index extends Page {
       ];
    }
 
-   __render() {
-      this._getRenderParent().innerHTML = this._template();
+   async __ajaxData() {
+      try {
+         await Promise
+            .all([
+               evodoc.getAPI().getUserPrivate().getAccessibleProjects(5),
+            ])
+            .then((values) => {
+               [
+                  this._getAccessibleProjects,
+               ] = values;
+            });
+      } catch (err) {
+         evodoc.getRouter().load(`/error/${err.code}`);
+         throw err;
+      }
    }
 
-   // __ajaxData() {}
+   __render() {
+      this._getRenderParent().innerHTML = this._template({
+         projects: this._getAccessibleProjects.body.projects.data,
+      });
+   }
 
    // __handlers() {}
 }
