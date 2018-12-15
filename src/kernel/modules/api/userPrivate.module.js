@@ -5,14 +5,14 @@ const randomstring = require('randomstring');
 
 // Error objects
 const errorConnect = require('Modules/connect.error');
-const errorCustom = require('Modules/api/_template.error');
+const errorUserPrivate = require('Modules/api/userPrivate.error');
 
 // Mock
 const ResponseObject = require('Kernel/ResponseObject.class');
-const mockData = require('Modules/api/_template.mock.json');
+const mockData = require('Modules/api/userPrivate.mock.json');
 
 
-class Custom {
+class UserPrivate {
    constructor() {
       this._storage = null;
    }
@@ -25,21 +25,15 @@ class Custom {
    }
 
 
-   async apiMethod() {
+   async getOwnAccount() {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
 
       if (localStorage.getItem('development') === 'true') {
          // Mock response
-         const resMockData = mockData.apiMethod;
+         const resMockData = mockData.getOwnAccount;
          const hash = randomstring.generate(32);
-
-         // Save data
-         localStorage.setItem('key', 'value');
-         this._storage.setData('key', resMockData.key);
-         this.item = 'value';
-
          return new ResponseObject(`dev-${hash}`, 200, resMockData);
       }
 
@@ -50,9 +44,7 @@ class Custom {
 
       let res;
       try {
-         res = await connect.postJSON('/path', {
-            key: 'value',
-         });
+         res = await connect.getJSON('/user/account');
       } catch (globalError) {
          throw globalError;
       }
@@ -65,24 +57,8 @@ class Custom {
       // Success
       if (res.code === 200) {
          log.info('[200] Event description');
-
-         // Global events - save data, etc.
-         localStorage.setItem('key', 'value');
-         this._storage.setData('key', res.body.key);
-         this.item = 'value';
-
          return res;
       }
-
-      // Failures
-      if (res.code === 400) {
-         throw new errorCustom.CustomError(
-            res.hash, res.code, res.body,
-            'ERROR',
-            'Info',
-         );
-      }
-
 
       // -----------------------------------------------------------------------
       // Unexpected Behaviour
@@ -90,7 +66,63 @@ class Custom {
 
       throw new errorConnect.UnexpectedError(
          res.hash, res.code, res.body,
-         'UB in sign in process',
+         'UB in getOwnAccount process',
+      );
+   }
+
+
+   async getAccessibleProjects(limit = 0) {
+      // -------------------------------------------------------------------------------------------
+      // Developer mode
+      // -------------------------------------------------------------------------------------------
+
+      if (localStorage.getItem('development') === 'true') {
+         // Mock response
+         const resMockData = mockData.getAccessibleProjects;
+         const hash = randomstring.generate(32);
+         return new ResponseObject(`dev-${hash}`, 200, resMockData);
+      }
+
+
+      // -------------------------------------------------------------------------------------------
+      // Production mode
+      // -------------------------------------------------------------------------------------------
+
+      let res;
+      try {
+         res = await connect.postJSON('/user/projects', {
+            limit,
+         });
+      } catch (globalError) {
+         throw globalError;
+      }
+
+
+      // -----------------------------------------------------------------------
+      // Response codes
+      // -----------------------------------------------------------------------
+
+      // Success
+      if (res.code === 200) {
+         log.info('[200] Get user projects');
+         return res;
+      }
+
+      // Failure
+      if (res.code === 400) {
+         throw new errorUserPrivate.LimitError(
+            res.hash, res.code, res.body,
+            'Limit should be 0<=x',
+         );
+      }
+
+      // -----------------------------------------------------------------------
+      // Unexpected Behaviour
+      // -----------------------------------------------------------------------
+
+      throw new errorConnect.UnexpectedError(
+         res.hash, res.code, res.body,
+         'UB in getOwnAccount process',
       );
    }
 
@@ -100,4 +132,4 @@ class Custom {
    // ----------------------------------------------------------------------------------------------
 }
 
-module.exports = Custom;
+module.exports = UserPrivate;

@@ -37,7 +37,7 @@ class Authorization {
       // Developer mode
       // -------------------------------------------------------------------------------------------
 
-      if (login === 'offline' && password === 'offlineTest0') {
+      if (login === 'offlineTest0' && password === 'offlineTest0') {
          log.debug('[000] Offline testing active');
          // Mock response
          const resMockData = mockData.signIn;

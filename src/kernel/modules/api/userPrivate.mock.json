@@ -1,0 +1,35 @@
+{
+  "getOwnAccount": {
+    "username": "evodoc",
+    "email": "email@evodoc.com",
+    "avatar": "e4d909c290d0fb1ca068ffafdf22cbd0",
+    "name": "Charlotte White",
+    "github": "evodoc",
+    "twitter": "evodoc"
+  },
+  "getAccessibleProjects": {
+    "projects": {
+      "label": ["id", "owner", "name", "description"],
+      "data": [
+        [
+          "10000",
+          "offlineTest0",
+          "Project Name 10000",
+          "Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi."
+        ],
+        [
+          "10001",
+          "offlineTest0",
+          "Project Name 10001",
+          "Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi."
+        ],
+        [
+          "10002",
+          "offlineTest100",
+          "Project Name 10002",
+          "Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi."
+        ]
+      ]
+    }
+  }
+}
