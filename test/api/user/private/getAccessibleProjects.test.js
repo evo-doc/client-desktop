@@ -59,13 +59,12 @@ module.exports = (config, request, utility) => {
                expect(res.body.projects.label).to.be.an('array');
                expect(res.body.projects.data).to.be.an('array');
 
-               expect(res.body.projects.label.length).to.equal(5);
+               expect(res.body.projects.label.length).to.equal(4);
 
                expect(res.body.projects.label).to.contain('id');
                expect(res.body.projects.label).to.contain('owner');
                expect(res.body.projects.label).to.contain('name');
                expect(res.body.projects.label).to.contain('description');
-               expect(res.body.projects.label).to.contain('version');
             }));
       });
    });
