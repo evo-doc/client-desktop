@@ -3,55 +3,73 @@ h1 Profile
 .profile
    .profile__info
 
-      img.profile__avatar(src="https://www.gravatar.com/avatar/00000000000000046540000000001000?d=identicon&f=y&s=180")
+      img.profile__avatar(src=avatar)
 
-      .profile__username evodoc
-      .profile__name Charlotte White
+      .profile__username #{username}
+      .profile__name #{name}
       .profile__email 
          i.fas.fa-envelope envelope
          | 
-         | example@example.com
-      .profile__twitter
-         i.fab.fa-github github
-         | 
-         | evodoc
-      .profile__github
-         i.fab.fa-twitter twitter
-         | 
-         | evodoc
+         | #{email}
+
+      if(github != null)
+         .profile__github
+            i.fab.fa-github 
+            | 
+            | #{github}
+      if(twitter != null)
+         .profile__twitter
+            i.fab.fa-twitter twitter
+            | 
+            | #{twitter}
 
    .profile__items
 
+      h1 Projects
+      //- .list
+      //-    - var n = 0;
+      //-    while n < 4
+      //-       a.list__item(href="/package/package-name-" + n + "/view")
+      //-          .list__header
+      //-             .list__header-left
+      //-                .list__title= 'username/package-name-' + n++
+      //-             .list__header-right
+      //-                .list__labels.tags
+      //-                   .tag.tag_owner owner
+      //-                   .tag.tag_version v58.1.9632
+      //-          .list__description
+      //-             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+
+
+      //- a.button(href="/packages/view") View all packages
+
+
       .list
-         - var n = 0;
-         while n < 4
-            a.list__item(href="/package/package-name-" + n + "/view")
-               .list__header
-                  .list__header-left
-                     .list__title= 'username/package-name-' + n++
-                  .list__header-right
-                     .list__labels.tags
-                        .tag.tag_owner owner
-                        .tag.tag_version v58.1.9632
-               .list__description
-                  | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
-
-
-      a.button(href="/packages/view") View all packages
-
-
-      .list
-         - var n = 0;
-         while n < 4
-            a.list__item(href="/project/project-name-" + n + "/view")
-               .list__header
-                  .list__header-left
-                     .list__title= 'Project Name ' + n++
-                  .list__header-right
-                     .list__labels.tags
-                        .tag.tag_owner owner
-               .list__description
-                  | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
-
+         if(projects.length === 0)
+            | You have no projects. Maybe you want to 
+            a(href="/projects/create") create
+            |
+            | some?
+         else
+            - var n = 0;
+            while n < projects.length
+               a.list__item(href="/project/" + projects[n][0] + "/view")
+                  .list__header
+                     .list__header-left
+                        .list__title
+                           if(projects[n][2] != "")
+                              | #{projects[n][2]}
+                           else
+                              | No Project Name
+                     .list__header-right
+                        .list__labels.tags
+                           if(projects[n][1] === true)
+                              .tag.tag_owner owner
+                  .list__description
+                     if(projects[n][3] != "")
+                        | #{projects[n][3]}
+                     else
+                        | No Project Name
+               - n++
 
       a.button(href="/projects/view") View all projects
