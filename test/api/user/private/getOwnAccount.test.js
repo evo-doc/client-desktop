@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const crypto = require('crypto');
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -9,10 +10,13 @@ chai.use(chaiHttp);
 // -------------------------------------------------------------------------------------------------
 
 module.exports = (config, request, utility) => {
-   describe('Is Authenticated', () => {
+   describe('Get own account', () => {
       const account = {
          username: utility.string(10),
          email() { return `${this.username}@example.com`; },
+         avatar() {
+            return crypto.createHash('md5').update(this.email().toLowerCase()).digest('hex');
+         },
          password: `aA#2${utility.string(10)}`,
          token: null,
       };
@@ -25,48 +29,29 @@ module.exports = (config, request, utility) => {
       after('Account destruction', () => utility.hooks.removeAccount(account));
 
       // -------------------------------------------------------------------------------------------
-      // Invalid
-      // -------------------------------------------------------------------------------------------
-
-      context('Invalid', () => {
-         it('expects 401 due to invalid token', () => request.auth.authenticated(account.token.slice(-1))
-            .then((res) => {
-               expect(res).to.have.status(401);
-               expect(res).to.have.header('content-type', 'application/json');
-               expect(res.body).to.be.an('object');
-               expect(res.body).to.have.all.keys('message', 'invalid');
-               expect(res.body.invalid).to.be.an('array');
-               expect(res.body.invalid).to.include('token');
-            })
-            .catch((err) => {
-               throw err;
-            }));
-
-         it('expects 401 due to missing Authorization header', () => chai.request(config.host)
-            .get('/auth/authenticated')
-            .send()
-            .then((res) => {
-               expect(res).to.have.status(401);
-            })
-            .catch((err) => {
-               throw err;
-            }));
-      });
-
-      // -------------------------------------------------------------------------------------------
       // Valid
       // -------------------------------------------------------------------------------------------
 
+      context('Invalid', () => {
+
+      });
+
+      // -------------------------------------------------------------------------------------------
+      // Invalid
+      // -------------------------------------------------------------------------------------------
+
       context('Valid', () => {
-         it('expects 200', () => request.auth.authenticated(account.token)
+         it('expects 200', () => request.user.getUserAccount(account.username, account.token)
             .then((res) => {
                expect(res).to.have.status(200);
                expect(res).to.have.header('content-type', 'application/json');
+
                expect(res.body).to.be.an('object');
-               expect(res.body).to.have.all.keys('message');
-            })
-            .catch((err) => {
-               throw err;
+               expect(res.body).to.have.all.keys('username', 'email', 'avatar', 'name');
+
+               expect(res.body.username).to.equal(account.username);
+               expect(res.body.email).to.equal(account.email());
+               expect(res.body.avatar).to.equal(account.avatar());
             }));
       });
    });

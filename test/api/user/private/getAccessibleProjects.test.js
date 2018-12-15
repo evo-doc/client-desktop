@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 // -------------------------------------------------------------------------------------------------
 
 module.exports = (config, request, utility) => {
-   describe('Is Authenticated', () => {
+   describe('Get accessible projects', () => {
       const account = {
          username: utility.string(10),
          email() { return `${this.username}@example.com`; },
@@ -25,48 +25,47 @@ module.exports = (config, request, utility) => {
       after('Account destruction', () => utility.hooks.removeAccount(account));
 
       // -------------------------------------------------------------------------------------------
-      // Invalid
+      // Valid
       // -------------------------------------------------------------------------------------------
 
       context('Invalid', () => {
-         it('expects 401 due to invalid token', () => request.auth.authenticated(account.token.slice(-1))
+         it('expects 400 because of invalid limit value', () => request.user.getAccessibleProjects({
+            limit: -5,
+         }, account.token)
             .then((res) => {
-               expect(res).to.have.status(401);
+               expect(res).to.have.status(400);
                expect(res).to.have.header('content-type', 'application/json');
                expect(res.body).to.be.an('object');
-               expect(res.body).to.have.all.keys('message', 'invalid');
+               expect(res.body).to.have.property('invalid');
                expect(res.body.invalid).to.be.an('array');
-               expect(res.body.invalid).to.include('token');
-            })
-            .catch((err) => {
-               throw err;
-            }));
-
-         it('expects 401 due to missing Authorization header', () => chai.request(config.host)
-            .get('/auth/authenticated')
-            .send()
-            .then((res) => {
-               expect(res).to.have.status(401);
-            })
-            .catch((err) => {
-               throw err;
+               expect(res.body.invalid).to.contain('limit');
             }));
       });
 
       // -------------------------------------------------------------------------------------------
-      // Valid
+      // Invalid
       // -------------------------------------------------------------------------------------------
 
       context('Valid', () => {
-         it('expects 200', () => request.auth.authenticated(account.token)
+         it('expects 200', () => request.user.getAccessibleProjects({
+            limit: 0,
+         }, account.token)
             .then((res) => {
                expect(res).to.have.status(200);
                expect(res).to.have.header('content-type', 'application/json');
                expect(res.body).to.be.an('object');
-               expect(res.body).to.have.all.keys('message');
-            })
-            .catch((err) => {
-               throw err;
+               expect(res.body).to.have.all.keys('projects');
+               expect(res.body.users).to.have.all.keys('label', 'data');
+               expect(res.body.users.label).to.be.an('array');
+               expect(res.body.users.data).to.be.an('array');
+
+               expect(res.body.users.label.length).to.equal(5);
+
+               expect(res.body.users.label).to.contain('id');
+               expect(res.body.users.label).to.contain('owner');
+               expect(res.body.users.label).to.contain('name');
+               expect(res.body.users.label).to.contain('description');
+               expect(res.body.users.label).to.contain('version');
             }));
       });
    });

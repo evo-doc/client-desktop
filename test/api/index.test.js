@@ -35,11 +35,52 @@ const method = {
 
    },
 
+   statistics: {
+      common: token => chai.request(config.host)
+         .get('/stats/common')
+         .set('Authorization', `Bearer ${token}`)
+         .send(),
+   },
+
    user: {
+      getAllUsers: token => chai.request(config.host)
+         .get('/users')
+         .set('Authorization', `Bearer ${token}`)
+         .send(),
+
+      getUserAccount: (username, token) => chai.request(config.host)
+         .get(`/users/${username}/account`)
+         .set('Authorization', `Bearer ${token}`)
+         .send(),
+
+      // getUserPackages: () => {}
+
+
+      getOwnAccount: token => chai.request(config.host)
+         .get('/user/account')
+         .set('Authorization', `Bearer ${token}`)
+         .send(),
+
+      editOwnAccount: (data, token) => chai.request(config.host)
+         .patch('/user/account')
+         .set('Authorization', `Bearer ${token}`)
+         .send(data),
+
       removeAccount: token => chai.request(config.host)
          .del('/user/account')
          .set('Authorization', `Bearer ${token}`)
          .send(),
+
+      changePassword: (data, token) => chai.request(config.host)
+         .patch('/user/account/password')
+         .set('Authorization', `Bearer ${token}`)
+         .send(data),
+
+      getAccessibleProjects: (data, token) => chai.request(config.host)
+         .post('/user/projects')
+         .set('Authorization', `Bearer ${token}`)
+         .send(data),
+
    },
 };
 
@@ -49,6 +90,31 @@ const method = {
 // -------------------------------------------------------------------------------------------------
 const utility = {
    string: num => randomstring.generate(num),
+
+   hooks: {
+      createAccount: account => method.auth.signup(
+         account.username, account.email(), account.password,
+      )
+         .then((res) => {
+            expect(res).to.have.status(200);
+            expect(res).to.have.header('content-type', 'application/json');
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('token');
+            expect(res.body.token).to.be.a('string');
+            return res.body.token;
+         })
+         .catch((err) => {
+            throw err;
+         }),
+
+      removeAccount: account => method.user.removeAccount(account.token)
+         .then((res) => {
+            expect(res).to.have.status(200);
+         })
+         .catch((err) => {
+            throw err;
+         }),
+   },
 };
 
 
@@ -76,6 +142,44 @@ describe('CONNECTION', () => {
       }));
 });
 
-require('./authentication/signin.test')(config, method, utility);
-require('./authentication/signup.test')(config, method, utility);
-require('./authentication/authenticated.test')(config, method, utility);
+// -------------------------------------------------------------------------------------------------
+
+describe('AUTHENTICATION', () => {
+   require('./authentication/signin.test')(config, method, utility);
+   require('./authentication/signup.test')(config, method, utility);
+   require('./authentication/authenticated.test')(config, method, utility);
+});
+
+// -------------------------------------------------------------------------------------------------
+
+describe('STATISTICS', () => {
+   require('./statistics/common.test')(config, method, utility);
+});
+
+// -------------------------------------------------------------------------------------------------
+
+
+describe('USER', async () => {
+   describe('USERS PUBLIC', () => {
+      require('./user/public/getAllUsers.test')(config, method, utility);
+      require('./user/public/getUserAccount.test')(config, method, utility);
+      require('./user/public/getUserPackages.test')(config, method, utility);
+   });
+
+   describe('USER PRIVATE', () => {
+      require('./user/private/getOwnAccount.test')(config, method, utility);
+      require('./user/private/editOwnAccount.test')(config, method, utility);
+      require('./user/private/changePassword.test')(config, method, utility);
+      require('./user/private/getAccessibleProjects.test')(config, method, utility);
+   });
+});
+
+// -------------------------------------------------------------------------------------------------
+
+describe('PROJECTS', () => true);
+
+// -------------------------------------------------------------------------------------------------
+
+describe('MODULES', () => {
+
+});
