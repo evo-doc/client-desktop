@@ -55,17 +55,17 @@ module.exports = (config, request, utility) => {
                expect(res).to.have.header('content-type', 'application/json');
                expect(res.body).to.be.an('object');
                expect(res.body).to.have.all.keys('projects');
-               expect(res.body.users).to.have.all.keys('label', 'data');
-               expect(res.body.users.label).to.be.an('array');
-               expect(res.body.users.data).to.be.an('array');
+               expect(res.body.projects).to.have.all.keys('label', 'data');
+               expect(res.body.projects.label).to.be.an('array');
+               expect(res.body.projects.data).to.be.an('array');
 
-               expect(res.body.users.label.length).to.equal(5);
+               expect(res.body.projects.label.length).to.equal(5);
 
-               expect(res.body.users.label).to.contain('id');
-               expect(res.body.users.label).to.contain('owner');
-               expect(res.body.users.label).to.contain('name');
-               expect(res.body.users.label).to.contain('description');
-               expect(res.body.users.label).to.contain('version');
+               expect(res.body.projects.label).to.contain('id');
+               expect(res.body.projects.label).to.contain('owner');
+               expect(res.body.projects.label).to.contain('name');
+               expect(res.body.projects.label).to.contain('description');
+               expect(res.body.projects.label).to.contain('version');
             }));
       });
    });
