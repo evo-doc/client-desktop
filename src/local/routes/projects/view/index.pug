@@ -23,7 +23,7 @@ p There you can find all your projects or projects where you are stated as a col
                      if(projects[n][2] != "")
                         | #{projects[n][2]}
                      else
-                        | No Project Name
+                        | No project name
                .list__header-right
                   .list__labels.tags
                      if(projects[n][1] === true)
@@ -32,5 +32,5 @@ p There you can find all your projects or projects where you are stated as a col
                if(projects[n][3] != "")
                   | #{projects[n][3]}
                else
-                  | No Project Name
+                  | No project description
          - n++

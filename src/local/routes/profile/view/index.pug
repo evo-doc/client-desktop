@@ -60,7 +60,7 @@ h1 Profile
                            if(projects[n][2] != "")
                               | #{projects[n][2]}
                            else
-                              | No Project Name
+                              | No project name
                      .list__header-right
                         .list__labels.tags
                            if(projects[n][1] === true)
@@ -69,7 +69,7 @@ h1 Profile
                      if(projects[n][3] != "")
                         | #{projects[n][3]}
                      else
-                        | No Project Name
+                        | No project description
                - n++
 
       a.button(href="/projects/view") View all projects
