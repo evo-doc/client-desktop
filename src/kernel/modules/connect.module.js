@@ -91,6 +91,7 @@ module.exports.getJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => {
    // Prepare & merge fetch options
    const reqOptionsDefault = {
       method: 'GET',
+      credentials: 'include',
       headers: {
          'Content-Type': 'application/json',
          Authorization: `Bearer ${evodoc.getAPI().getAuth().getToken()}`,
@@ -155,6 +156,7 @@ module.exports.postJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => 
    // Prepare & merge fetch options
    const reqOptionsDefault = {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(reqBody),
       headers: {
          'Content-Type': 'application/json',
