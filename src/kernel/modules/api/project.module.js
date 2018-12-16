@@ -4,7 +4,7 @@ const randomstring = require('randomstring');
 
 // Error objects
 const errorConnect = require('Modules/connect.error');
-const errorCustom = require('Modules/api/project.error');
+const errorProject = require('Modules/api/project.error');
 
 // Mock
 const ResponseObject = require('Kernel/ResponseObject.class');
@@ -19,7 +19,7 @@ class Custom {
    init() {}
 
 
-   async projectCreate(name, description, collaborators) {
+   async projectCreate(name, description, collaborators = { contributors: [] }) {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectDataError(
+         throw new errorProject.ProjectDataError(
             res.hash, res.code, res.body,
             'Project data are invalid or non-unique.',
          );
@@ -115,7 +115,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectNotFoundError(
+         throw new errorProject.ProjectNotFoundError(
             res.hash, res.code, res.body,
             `Project with ID=${id} not found`,
          );
@@ -174,7 +174,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectDataError(
+         throw new errorProject.ProjectDataError(
             res.hash, res.code, res.body,
             'Project data are invalid or non-unique.',
          );
@@ -229,7 +229,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectNotFoundError(
+         throw new errorProject.ProjectNotFoundError(
             res.hash, res.code, res.body,
             `Project with ID=${id} not found`,
          );
@@ -293,7 +293,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectCollabOrRoleError(
+         throw new errorProject.ProjectCollabOrRoleError(
             res.hash, res.code, res.body,
             'Username or role is invalid',
          );
@@ -351,7 +351,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectCollabOrRoleError(
+         throw new errorProject.ProjectCollabOrRoleError(
             res.hash, res.code, res.body,
             'Username or role is invalid',
          );
@@ -408,7 +408,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorCustom.ProjectCollabOrRoleError(
+         throw new errorProject.ProjectCollabOrRoleError(
             res.hash, res.code, res.body,
             'Username is invalid',
          );
