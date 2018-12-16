@@ -26,6 +26,11 @@
       color: white;
    }
 
+   &_access {
+      background-color: var(--color-light-blue);
+      color: white;
+   }
+
    &:last-child {
       margin-right: 0;
    }
