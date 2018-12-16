@@ -28,6 +28,9 @@ p There you can find all your projects or projects where you are stated as a col
                   .list__labels.tags
                      if(projects[n][1] === true)
                         .tag.tag_owner owner
+                     else 
+                        .tag.tag_access access
+
             .list__description
                if(projects[n][3] != "")
                   | #{projects[n][3]}

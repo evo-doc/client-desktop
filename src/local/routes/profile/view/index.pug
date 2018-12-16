@@ -51,8 +51,9 @@ h1 Profile
             |
             | some?
          else
+            - var len = projects.length > 5 ? 5 : projects.length;
             - var n = 0;
-            while n < projects.length
+            while n < len
                a.list__item(href="/project/" + projects[n][0] + "/view")
                   .list__header
                      .list__header-left
@@ -65,6 +66,8 @@ h1 Profile
                         .list__labels.tags
                            if(projects[n][1] === true)
                               .tag.tag_owner owner
+                           else 
+                              .tag.tag_access access
                   .list__description
                      if(projects[n][3] != "")
                         | #{projects[n][3]}
