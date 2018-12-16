@@ -116,7 +116,7 @@ class Custom {
       // Failures
       if (res.code === 400) {
          throw new errorProject.ProjectNotFoundError(
-            res.hash, res.code, res.body,
+            res.hash, 404, res.body,
             `Project with ID=${id} not found`,
          );
       }

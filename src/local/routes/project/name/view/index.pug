@@ -1,21 +1,29 @@
-h1 Project Name
-p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore veniam alias molestias consequatur, voluptatum earum deleniti dolor, est enim distinctio non dolorum commodi sequi minima dolorem sed, ipsam adipisci iste. Animi voluptate error laborum nam aliquam quod culpa odio magni dicta non sed iste natus, aperiam exercitationem rerum blanditiis nulla?
+h1 #{project.name}
+p #{project.description}
 
-h2 Collaborators
+h1 Collaborators
 
+//- TODO: Collaborators view
 .collaborators
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
+   if(project.collaborators.data.length> 0)
+      - var iCollabs = 0;
+      while iCollabs < project.collaborators.data.length
+         .collaborators__item(class="collaborators__item_" + project.collaborators.data[iCollabs][2])
+            .collaborators__avatar
+               img(src="https://www.gravatar.com/avatar/" + project.collaborators.data[iCollabs][1] + "?d=identicon&f=y&s=20`")
+            .collaborators__name #{project.collaborators.data[iCollabs][0]}
 
-h2 Modules
-.search.search_big
-   label
-      span Modules
-      input(type="text", name="search" placeholder="Search")
+         - iCollabs++;
+   else 
+      p No contributors. Impossible, at least an owner shoud be there.
 
+h1 Modules
+//- .search.search_big
+//-    label
+//-       span Modules
+//-       input(type="text", name="search" placeholder="Search")
+
+//- TODO: Modules view
 .list
    - var n = 0;
    while n < 4
@@ -30,4 +38,4 @@ h2 Modules
          .list__description
             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
 
-a.button(href="/") View all
+a.button(href="/project/" + projectId + "/modules/view") View all

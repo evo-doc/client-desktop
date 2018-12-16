@@ -1,0 +1,35 @@
+@import '~Styles/_variables.scss';
+
+.collaborators {
+   display: flex;
+   flex-wrap: wrap;
+
+   &__item {
+      flex: 0 0 auto;
+      justify-content: flex-start;
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--color-light-white);
+      margin: 0 10px 10px 0;
+      padding: 4px 8px;
+      border-radius: $g1;
+
+      &_owner {
+         border: 2px solid var(--color-green);
+      }
+
+      &_contributor {
+         // border: 2px solid var(--color-green);
+      }
+   }
+
+   &__avatar {
+      margin: 0 8px 0 0;
+      img {
+         display: block;
+      }
+   }
+
+   &__name {
+   }
+}
