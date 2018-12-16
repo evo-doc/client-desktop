@@ -81,6 +81,7 @@ class Page {
       // Handlers
       this.__handlers();
 
+      document.querySelector('main').scrollTop = 0;
       log.trace(`Page [SUCCESS]: ${this._args[0]}`);
       loader.hide();
    }
