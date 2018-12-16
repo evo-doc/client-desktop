@@ -88,6 +88,8 @@ class Index extends Page {
                   text: 'Password is invalid.',
                }).show();
             }
+
+            return;
          }
 
          connect.processOtherErrors(e);
