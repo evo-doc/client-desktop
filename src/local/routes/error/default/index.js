@@ -12,6 +12,9 @@ class Index extends Page {
       this._template = template;
    }
 
+   __ajaxData() {}
+
+
    __render() {
       const code = this._getArgs()[1];
       this._getRenderParent().innerHTML = this._template({
@@ -22,7 +25,6 @@ class Index extends Page {
       });
    }
 
-   __ajaxData() {}
 
    __handlers() {}
 }

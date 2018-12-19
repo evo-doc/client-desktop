@@ -1,6 +1,7 @@
 // Stylesheet
 require('./index.scss');
 
+const connect = require('Modules/connect.module');
 
 const Page = require('Kernel/Page.class');
 const template = require('./index.pug');
@@ -15,12 +16,17 @@ class Index extends Page {
    }
 
    async __ajaxData() {
-      try {
-         this.stats = await evodoc.getAPI().getStats().common();
-      } catch (err) {
-         evodoc.getRouter().load(`/error/${err.code}`);
+      await connect.ajaxRequest(
+         async () => {
+            this.stats = await evodoc.getAPI().getStats().common();
+         },
+         () => {
+         },
+      ).catch((err) => {
+         // Everything is resolved, placeholder PropagationCancel
+         // Need to stop renderings this page
          throw err;
-      }
+      });
    }
 
 

@@ -1,6 +1,8 @@
 // Stylesheet
 require('./index.scss');
 
+const connect = require('Modules/connect.module');
+const errorConnect = require('Modules/connect.error');
 
 const Noty = require('noty');
 const Page = require('Kernel/Page.class');
@@ -17,7 +19,7 @@ class Index extends Page {
       this._getRenderParent().innerHTML = this._template();
    }
 
-   // __ajaxData() {}
+   __ajaxData() {}
 
    __handlers() {
       const buttonCreaterPoject = document.querySelector('#createrPoject');
@@ -29,23 +31,32 @@ class Index extends Page {
       });
    }
 
-   async createProject(name, desc) {
-      try {
-         const res = await evodoc.getAPI().getProjects().projectCreate(name, desc);
 
-         evodoc.getRouter().load(`/project/${res.body.id}/view`);
-      } catch (e) {
-         // Error handling
-         if (e instanceof errorProject.ProjectDataError) {
-            if (e.body.invalid.indexOf('name') >= 0) {
-               new Noty({
-                  text: 'The project name is too short.',
-                  type: 'error',
-                  timeout: 5000,
-               }).show();
+   /**
+    * @summary Create a new project and load it
+    * @param {string} name
+    * @param {string} desc
+    */
+   async createProject(name, desc) {
+      await connect.ajaxRequest(
+         async () => {
+            const res = await evodoc.getAPI().getProjects().projectCreate(name, desc);
+            evodoc.getRouter().load(`/project/${res.body.id}/view`);
+         },
+         (err) => {
+            // Error handling
+            if (err instanceof errorProject.ProjectDataError) {
+               if (err.body.invalid.indexOf('name') >= 0) {
+                  new Noty({
+                     text: 'The project name is too short.',
+                     type: 'error',
+                     timeout: 5000,
+                  }).show();
+               }
+               throw new errorConnect.PropagationCancel();
             }
-         }
-      }
+         },
+      );
    }
 }
 
