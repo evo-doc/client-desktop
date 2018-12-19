@@ -6,6 +6,8 @@ const AuthAPI = require('Modules/api/auth.module');
 const StatsAPI = require('Modules/api/stats.module');
 const ProjectsAPI = require('Modules/api/project.module');
 const UserPrivateAPI = require('Modules/api/userPrivate.module');
+const UserPublicAPI = require('Modules/api/userPublic.module');
+const ModulesAPI = require('Modules/api/modules.module');
 
 
 class API {
@@ -16,6 +18,7 @@ class API {
       this._stats = null;
       this._projects = null;
       this._userPrivate = null;
+      this._userPublic = null;
    }
 
    init() {
@@ -43,6 +46,16 @@ class API {
    getUserPrivate() {
       if (this._userPrivate === null) this._userPrivate = new UserPrivateAPI();
       return this._userPrivate;
+   }
+
+   getUserPublic() {
+      if (this._userPublic === null) this._userPublic = new UserPublicAPI();
+      return this._userPublic;
+   }
+
+   getModules() {
+      if (this._userModules === null) this._userModules = new ModulesAPI();
+      return this._userModules;
    }
 }
 
