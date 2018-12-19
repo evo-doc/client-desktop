@@ -229,15 +229,15 @@ module.exports.deleteJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) =
 };
 
 
-module.exports.ajaxRequest = async (ajaxFunction, catchFunction) => new Promise(
-   async (resolve) => {
+module.exports.ajaxRequest = (ajaxFunction, catchFunction) => new Promise(
+   async (resolve, reject) => {
       try {
          await ajaxFunction();
          // Promise resolved
          resolve();
       } catch (err) {
          try {
-            catchFunction(err);
+            catchFunction(err, reject);
          } catch (e) {
             // The error was resolved in catchFunction
             // Doesn't need to check global errors
@@ -258,6 +258,8 @@ module.exports.ajaxRequest = async (ajaxFunction, catchFunction) => new Promise(
          // Promise rejected
          log.error('Impossible error');
          evodoc.getRouter().load('/error/999');
+         console.error(err);
+
          throw new errorConnect.PropagationCancel();
       }
    },

@@ -23,8 +23,6 @@ class Index extends Page {
          () => {
          },
       ).catch((err) => {
-         // Everything is resolved, placeholder PropagationCancel
-         // Need to stop renderings this page
          throw err;
       });
    }

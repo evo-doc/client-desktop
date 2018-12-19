@@ -15,11 +15,13 @@ class Index extends Page {
       this._template = template;
    }
 
+   __ajaxData() {}
+
+
    __render() {
       this._getRenderParent().innerHTML = this._template();
    }
 
-   __ajaxData() {}
 
    __handlers() {
       const buttonCreaterPoject = document.querySelector('#createrPoject');

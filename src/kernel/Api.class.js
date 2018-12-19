@@ -19,6 +19,7 @@ class API {
       this._projects = null;
       this._userPrivate = null;
       this._userPublic = null;
+      this._modules = null;
    }
 
    init() {
@@ -26,6 +27,8 @@ class API {
       this.getStats();
       this.getProjects();
       this.getUserPrivate();
+      this.getUserPublic();
+      this.getModules();
    }
 
    getAuth() {
@@ -54,8 +57,8 @@ class API {
    }
 
    getModules() {
-      if (this._userModules === null) this._userModules = new ModulesAPI();
-      return this._userModules;
+      if (this._modules === null) this._modules = new ModulesAPI();
+      return this._modules;
    }
 }
 

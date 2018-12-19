@@ -3,6 +3,7 @@ require('./index.scss');
 
 
 const Page = require('Kernel/Page.class');
+const connect = require('Modules/connect.module');
 const template = require('./index.pug');
 
 
@@ -21,20 +22,18 @@ class Index extends Page {
    }
 
    async __ajaxData() {
-      try {
-         await Promise
-            .all([
-               evodoc.getAPI().getUserPrivate().getAccessibleProjects(),
-            ])
-            .then((values) => {
-               [
-                  this._getAccessibleProjects,
-               ] = values;
-            });
-      } catch (err) {
-         evodoc.getRouter().load(`/error/${err.code}`);
+      // For the deatailed example - see this.apiRequest();
+      await connect.ajaxRequest(
+         async () => {
+            this._getAccessibleProjects = await evodoc
+               .getAPI().getUserPrivate().getAccessibleProjects();
+         },
+         () => {},
+      ).catch((err) => {
+         // Everything is resolved, placeholder PropagationCancel
+         // Need to stop renderings this page
          throw err;
-      }
+      });
    }
 
    __render() {

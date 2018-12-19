@@ -77,6 +77,7 @@ class Index extends Page {
                   timeout: 5000,
                }).show();
                // Always throw an exception to show that error was handeled
+               evodoc.getRouter().load('/error/404');
                throw new errorConnect.PropagationCancel();
             }
          },
