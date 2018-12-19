@@ -1,0 +1,23 @@
+{
+  "getAllModules": {
+    "message": "All modules of a project",
+    "projectId": "1",
+    "modules": {
+      "label": ["id", "name", "description"],
+      "data": [["123", "module-name", "Some kind of a description"]]
+    }
+  },
+  "getModule":   {
+    "id": "1",
+    "projectId": "123",
+    "projectName": "Project Real Name",
+    "name": "module-name",
+    "description": "Module description",
+    "state" : {
+      "editing": false
+    },
+    "content": {
+      "type": "markdown",
+      "body": "... module content ..."
+    }
+  }

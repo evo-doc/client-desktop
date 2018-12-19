@@ -66,3 +66,34 @@ module.exports.InvalidLimitError = class InvalidLimitError extends Error {
       log.error(`[${code}]: ${this.message} (${hash})`);
    }
 };
+
+module.exports.PropagationCancel = class PropagationCancel extends Error {
+   constructor(...params) {
+      super(...params);
+
+      if (Error.captureStackTrace) {
+         Error.captureStackTrace(this, PropagationCancel);
+      }
+   }
+};
+
+
+/**
+ * @summary Invalid data
+ * @description limit < 0 OR NaN
+ */
+module.exports.InvalidDataError = class InvalidDataError extends Error {
+   constructor(hash, code, body, ...params) {
+      super(...params);
+
+      if (Error.captureStackTrace) {
+         Error.captureStackTrace(this, InvalidDataError);
+      }
+
+      this.hash = hash;
+      this.code = code;
+      this.body = body;
+
+      log.error(`[${code}]: ${this.message} (${hash})`);
+   }
+};

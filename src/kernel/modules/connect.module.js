@@ -187,7 +187,10 @@ module.exports.postJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) => 
 
    // Security fix :)
    let reqBodyPrivate = reqBody;
-   if (reqPath.indexOf('auth/') === 1) {
+   if (
+      reqPath.indexOf('auth/') === 1
+      || reqPath.indexOf('/user/account/password') === 1
+   ) {
       reqBodyPrivate = { key: 'Request body data are hidden due to privacy.' };
    }
 
@@ -226,22 +229,36 @@ module.exports.deleteJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) =
 };
 
 
-/**
- * @summary
- * @description API responses always throw a few common errors (Global error, UB error, ...).
- * This function is shared between all files that need to validate a response.
- */
-module.exports.processOtherErrors = (e) => {
-   if (e instanceof errorConnect.ResponseError) {
-      evodoc.getRouter().load(`/error/${e.code}`);
-      return;
-   }
+module.exports.ajaxRequest = async (ajaxFunction, catchFunction) => new Promise(
+   async (resolve) => {
+      try {
+         await ajaxFunction();
+         // Promise resolved
+         resolve();
+      } catch (err) {
+         try {
+            catchFunction(err);
+         } catch (e) {
+            // The error was resolved in catchFunction
+            // Doesn't need to check global errors
+            resolve();
+            return;
+         }
 
-   if (e instanceof errorConnect.UnexpectedError) {
-      evodoc.getRouter().load('/error/666');
-      return;
-   }
+         if (err instanceof errorConnect.ResponseError) {
+            evodoc.getRouter().load(`/error/${err.code}`);
+            throw new errorConnect.PropagationCancel();
+         }
 
-   log.error('Impossible error');
-   evodoc.getRouter().load('/error/999');
-};
+         if (err instanceof errorConnect.UnexpectedError) {
+            evodoc.getRouter().load('/error/666');
+            throw new errorConnect.PropagationCancel();
+         }
+
+         // Promise rejected
+         log.error('Impossible error');
+         evodoc.getRouter().load('/error/999');
+         throw new errorConnect.PropagationCancel();
+      }
+   },
+);

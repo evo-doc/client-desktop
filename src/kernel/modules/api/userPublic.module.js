@@ -1,11 +1,9 @@
-const Storage = require('Modules/storage.module');
 const log = require('Modules/logger.app.module');
 const connect = require('Modules/connect.module');
 const randomstring = require('randomstring');
 
 // Error objects
 const errorConnect = require('Modules/connect.error');
-// const errorCustom = require('Modules/api/_template.error');
 
 // Mock
 const ResponseObject = require('Kernel/ResponseObject.class');
@@ -17,40 +15,67 @@ class Custom {
       this._storage = null;
    }
 
-   init() {
-      // New Optional Storage
-      this._storage = new Storage('custom', {
-         item: '',
-      });
-   }
+   init() {}
 
 
-   async apiMethod() {
+   async getAllUsers() {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
       if (localStorage.getItem('development') === 'true') {
          // Mock response
-         const resMockData = mockData.apiMethod;
+         const resMockData = mockData.getAllUsers;
          const hash = randomstring.generate(32);
-
-         // Save data
-         localStorage.setItem('key', 'value');
-         this._storage.setData('key', resMockData.key);
-         this.item = 'value';
-
          return new ResponseObject(`dev-${hash}`, 200, resMockData);
       }
-
 
       // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
       let res;
       try {
-         res = await connect.postJSON('/path', {
-            key: 'value',
-         });
+         res = await connect.getJSON('/users');
+      } catch (globalError) {
+         throw globalError;
+      }
+
+      // -----------------------------------------------------------------------
+      // Response codes
+      // -----------------------------------------------------------------------
+      // Success
+      if (res.code === 200) {
+         log.info('[200] Get usernames');
+         return res;
+      }
+
+      // -----------------------------------------------------------------------
+      // Unexpected Behaviour
+      // -----------------------------------------------------------------------
+
+      throw new errorConnect.UnexpectedError(
+         res.hash, res.code, res.body,
+         'UB in getAllUsers process',
+      );
+   }
+
+
+   async getUserAccount(username) {
+      // -------------------------------------------------------------------------------------------
+      // Developer mode
+      // -------------------------------------------------------------------------------------------
+      if (localStorage.getItem('development') === 'true') {
+         // Mock response
+         const resMockData = mockData.getUserAccount;
+         const hash = randomstring.generate(32);
+         return new ResponseObject(`dev-${hash}`, 200, resMockData);
+      }
+
+      // -------------------------------------------------------------------------------------------
+      // Production mode
+      // -------------------------------------------------------------------------------------------
+      let res;
+      try {
+         res = await connect.getJSON(`/users/${username}/account`);
       } catch (globalError) {
          throw globalError;
       }
@@ -59,15 +84,10 @@ class Custom {
       // -----------------------------------------------------------------------
       // Response codes
       // -----------------------------------------------------------------------
+
       // Success
       if (res.code === 200) {
-         log.info('[200] Event description');
-
-         // Global events - save data, etc.
-         localStorage.setItem('key', 'value');
-         this._storage.setData('key', res.body.key);
-         this.item = 'value';
-
+         log.info('[200] Get user account data');
          return res;
       }
 
@@ -83,9 +103,10 @@ class Custom {
       // -----------------------------------------------------------------------
       // Unexpected Behaviour
       // -----------------------------------------------------------------------
+
       throw new errorConnect.UnexpectedError(
          res.hash, res.code, res.body,
-         'UB in XXX process',
+         'UB in getUserAccount process',
       );
    }
 
