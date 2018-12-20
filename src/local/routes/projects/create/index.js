@@ -2,7 +2,6 @@
 require('./index.scss');
 
 const connect = require('Modules/connect.module');
-const errorConnect = require('Modules/connect.error');
 
 const Noty = require('noty');
 const Page = require('Kernel/Page.class');
@@ -24,8 +23,8 @@ class Index extends Page {
 
 
    __handlers() {
-      const buttonCreaterPoject = document.querySelector('#createrPoject');
-      buttonCreaterPoject.addEventListener('click', () => {
+      document.querySelector('#createrPoject').addEventListener('submit', (evt) => {
+         evt.preventDefault();
          const projectName = document.querySelector('#projectName').value;
          const projectDescription = document.querySelector('#projectDescription').value;
 
@@ -51,12 +50,14 @@ class Index extends Page {
                if (err.body.invalid.indexOf('name') >= 0) {
                   new Noty({
                      text: 'The project name is too short.',
-                     type: 'error',
+                     type: 'warning',
                      timeout: 5000,
                   }).show();
                }
-               throw new errorConnect.PropagationCancel();
+               return;
             }
+
+            throw err;
          },
       );
    }

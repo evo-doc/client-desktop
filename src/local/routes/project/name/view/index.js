@@ -37,16 +37,14 @@ class Index extends Page {
             });
          },
          (err) => {
+            // Solving local errors
             if (err instanceof errorConnect.InvalidDataError) {
                evodoc.getRouter().load('/error/404');
-               // throw new errorConnect.PropagationCancel();
-               return 'handled';
+               return;
             }
-            return 'err';
+            throw err;
          },
       ).catch((err) => {
-         console.error('Tohle se neprovadi?');
-
          // Everything is resolved, placeholder PropagationCancel
          // Need to stop renderings this page
          throw err;

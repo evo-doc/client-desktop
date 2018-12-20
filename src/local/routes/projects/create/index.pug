@@ -1,24 +1,24 @@
 h1 Create new project
 
 //- h2 Common information
+form#createrPoject
+   h3 Name
+   p A name of your new project. E.g. "Awesome documentation"
+   input#projectName(placeholder="Project name")
 
-h3 Name
-p A name of your new project. E.g. "Awesome documentation"
-input#projectName(placeholder="Project name")
+   h3 Description
+   p A short project description. Will be displayed e.g. at project lists.
+   textarea#projectDescription(placeholder="Short description")
 
-h3 Description
-p A short project description. Will be displayed e.g. at project lists.
-textarea#projectDescription(placeholder="Short description")
+   //- h2 Collaborators
 
-//- h2 Collaborators
+   //- .collaborators
+   //-    .collaborators__item username
+   //-    .collaborators__item username
+   //-    .collaborators__item username
+   //-    .collaborators__item username
+   //-    .collaborators__item username
 
-//- .collaborators
-//-    .collaborators__item username
-//-    .collaborators__item username
-//-    .collaborators__item username
-//-    .collaborators__item username
-//-    .collaborators__item username
+   //- input(placeholder="username")
 
-//- input(placeholder="username")
-
-span#createrPoject.button Create
+   input(type="submit", value="Create").button
