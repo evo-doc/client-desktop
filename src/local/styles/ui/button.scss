@@ -4,10 +4,15 @@
    background-color: var(--color-dark-blue);
    color: var(--color-light-white);
    text-align: center;
-
+   height: auto;
+   line-height: 1.6em;
+   font-size: 18px;
+   box-shadow: none;
+   cursor: pointer;
    text-decoration: none;
    text-transform: uppercase;
    border-radius: 32px 18px 32px 18px;
+   margin: $g1 0;
 
    &:hover {
       text-decoration: none;
