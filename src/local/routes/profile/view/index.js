@@ -3,6 +3,8 @@ require('./index.scss');
 
 
 const Page = require('Kernel/Page.class');
+const connect = require('Modules/connect.module');
+const errorConnect = require('Modules/connect.error');
 const template = require('./index.pug');
 
 
@@ -21,22 +23,32 @@ class Index extends Page {
    }
 
    async __ajaxData() {
-      try {
-         await Promise
-            .all([
+      await connect.ajaxRequest(
+         async () => {
+            // Multiple request
+            await Promise.all([
                evodoc.getAPI().getUserPrivate().getOwnAccount(),
                evodoc.getAPI().getUserPrivate().getAccessibleProjects(5),
-            ])
-            .then((values) => {
+            ]).then((values) => {
                [
                   this._getOwnAccount,
                   this._getAccessibleProjects,
                ] = values;
             });
-      } catch (err) {
-         evodoc.getRouter().load(`/error/${err.code}`);
+         },
+         (err) => {
+            // Solving local errors
+            if (err instanceof errorConnect.InvalidDataError) {
+               evodoc.getRouter().load('/error/404');
+               return;
+            }
+            throw err;
+         },
+      ).catch((err) => {
+         // Everything is resolved, placeholder PropagationCancel
+         // Need to stop renderings this page
          throw err;
-      }
+      });
    }
 
    __render() {
