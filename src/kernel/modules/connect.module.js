@@ -216,7 +216,7 @@ module.exports.patchJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) =>
       method: 'PATCH',
    };
    const reqOptionsUserPatch = Object.assign({}, reqOptionsUser, reqOptionsPatch);
-   this.postJSON(reqPath, reqBody, reqOptionsUserPatch);
+   return this.postJSON(reqPath, reqBody, reqOptionsUserPatch);
 };
 
 
@@ -225,25 +225,21 @@ module.exports.deleteJSON = async (reqPath, reqBody = {}, reqOptionsUser = {}) =
       method: 'DELETE',
    };
    const reqOptionsUserDelete = Object.assign({}, reqOptionsUser, reqOptionsDelete);
-   this.postJSON(reqPath, reqBody, reqOptionsUserDelete);
+   return this.postJSON(reqPath, reqBody, reqOptionsUserDelete);
 };
 
 
-module.exports.ajaxRequest = (ajaxFunction, catchFunction) => new Promise(
-   async (resolve, reject) => {
+module.exports.ajaxRequest = async (ajaxFunction, catchFunction) => {
+   try {
+      // Try to do all requests
+      await ajaxFunction();
+   } catch (err) {
       try {
-         await ajaxFunction();
-         // Promise resolved
-         resolve();
-      } catch (err) {
-         try {
-            catchFunction(err, reject);
-         } catch (e) {
-            // The error was resolved in catchFunction
-            // Doesn't need to check global errors
-            resolve();
-            return;
-         }
+         // Some requests have exceptions
+         catchFunction(err);
+      } catch (e) {
+         // The error was NOT resolved in catchFunction
+         // Need to check global errors
 
          if (err instanceof errorConnect.ResponseError) {
             evodoc.getRouter().load(`/error/${err.code}`);
@@ -258,9 +254,7 @@ module.exports.ajaxRequest = (ajaxFunction, catchFunction) => new Promise(
          // Promise rejected
          log.error('Impossible error');
          evodoc.getRouter().load('/error/999');
-         console.error(err);
-
          throw new errorConnect.PropagationCancel();
       }
-   },
-);
+   }
+};
