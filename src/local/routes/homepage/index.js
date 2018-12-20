@@ -20,9 +20,12 @@ class Index extends Page {
          async () => {
             this.stats = await evodoc.getAPI().getStats().common();
          },
-         () => {
+         (err) => {
+            throw err;
          },
       ).catch((err) => {
+         // Everything is resolved, placeholder PropagationCancel
+         // Need to stop renderings this page
          throw err;
       });
    }
