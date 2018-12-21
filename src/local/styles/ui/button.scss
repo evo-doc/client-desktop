@@ -13,6 +13,9 @@
    text-transform: uppercase;
    border-radius: 32px 18px 32px 18px;
    margin: $g1 0;
+   align-items: center;
+   display: flex;
+   justify-content: center;
 
    &:hover {
       text-decoration: none;

@@ -2,12 +2,12 @@
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   margin: $g5 0;
+   margin: $g2 0 $g5 0;
 
    &_button {
       .button {
          margin-right: $g1;
-         flex: 1 1 auto;
+         flex: 1 1 0;
 
          &:last-child {
             margin-right: 0;
