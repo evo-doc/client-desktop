@@ -18,7 +18,16 @@ class Index extends Page {
    async __ajaxData() {
       await connect.ajaxRequest(
          async () => {
-            this.stats = await evodoc.getAPI().getStats().common();
+            // Multiple request
+            await Promise.all([
+               evodoc.getAPI().getStats().common(),
+               evodoc.getAPI().getUserPrivate().getAccessibleProjects(5),
+            ]).then((values) => {
+               [
+                  this._stats,
+                  this._getAccessibleProjects,
+               ] = values;
+            });
          },
          (err) => {
             throw err;
@@ -32,12 +41,19 @@ class Index extends Page {
 
 
    __render() {
+      // Onwer tags
+      const username = evodoc.getAPI().getAuth().getUsername();
+      for (let i = 0; i < this._getAccessibleProjects.body.projects.data.length; i++) {
+         const owner = this._getAccessibleProjects.body.projects.data[i][1];
+         if (owner === username) {
+            this._getAccessibleProjects.body.projects.data[i][1] = true;
+         }
+      }
+
+
       this._getRenderParent().innerHTML = this._template({
-         stats: {
-            users: this.stats.body.users,
-            packages: this.stats.body.packages,
-            projects: this.stats.body.projects,
-         },
+         stats: this._stats.body,
+         projects: this._getAccessibleProjects.body.projects.data,
       });
    }
 

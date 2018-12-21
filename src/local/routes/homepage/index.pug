@@ -1,23 +1,93 @@
 
 h1 Dashboard
 
-p Welcome to you dashboard. 
+
+
+
+//- h1 Statistics
+
+.stats
+   .stats__item
+      .stats__value #{stats.users}
+      .stats__description Users
+   .stats__item
+      .stats__value #{stats.packages}
+      .stats__description Packages
+   .stats__item
+      .stats__value #{stats.projects}
+      .stats__description Projects
+
+
+p Welcome to you dashboard. If you are a new user, you can start with a creating of new project, editing you profile or reading EvoDoc user documentation and FAQ. 
+
 
 .collection.collection_row.collection_button
-   a.button(href="/packages/create") Add pacakge
-   a.button.button_blue(href="/projects/create") Create Project
-   a.button(href="/profile/view") View Profile
-   a.button(href="/docs") Read Docs
+   //- a.button(href="/packages/create") Add pacakge
+   a.button.button_blue(href="/projects/create") 
+      span Create Project
+   a.button(href="/profile/view") 
+      span View Profile
+   a.button(href="/docs") 
+      span Documentation
 
 
-h1 Registry Search
 
-.search.search_big
-   label
-      span User Packages
-      input(type="text", name="search" placeholder="Search")
+h1 Recent projects
 
-p Packages functionality is not released yet.
+.list
+   if(projects.length === 0)
+      | You have no projects. Maybe you want to 
+      a(href="/projects/create") create
+      |
+      | some?
+   else
+      - var len = projects.length > 5 ? 5 : projects.length;
+      - var n = 0;
+      while n < len
+         a.list__item(href="/project/" + projects[n][0] + "/view")
+            .list__header
+               .list__header-left
+                  .list__title
+                     if(projects[n][2] != "")
+                        | #{projects[n][2]}
+                     else
+                        | No project name
+               .list__header-right
+                  .list__labels.tags
+                     if(projects[n][1] === true)
+                        .tag.tag_owner owner
+                     else 
+                        .tag.tag_access access
+            .list__description
+               if(projects[n][3] != "")
+                  | #{projects[n][3]}
+               else
+                  | No project description
+         - n++
+
+a.button(href="/projects/view") View all projects
+
+
+
+//- h1 Popular packages
+
+//- p Packages functionality is not released yet.
+
+//- .popular-packages(style="column-count: 4;")
+//-    - n = 0;
+//-    while n < 20
+//-       | example <br>
+//-       - n++
+
+
+h1 Registry search
+p We are sorry, this functionality isn't implemented yet.
+
+//- .search.search_big
+//-    label
+//-       span User Packages
+//-       input(type="text", name="search" placeholder="Search")
+
 
 //- .list
 //-    - var n = 0;
@@ -35,26 +105,3 @@ p Packages functionality is not released yet.
 //-          .list__description
 //-             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
 
-
-h1 Statistics
-
-.stats
-   .stats__item
-      .stats__value #{stats.users}
-      .stats__description Users
-   .stats__item
-      .stats__value #{stats.packages}
-      .stats__description Packages
-   .stats__item
-      .stats__value #{stats.projects}
-      .stats__description Projects
-
-h1 Popular packages
-
-p Packages functionality is not released yet.
-
-//- .popular-packages(style="column-count: 4;")
-//-    - n = 0;
-//-    while n < 20
-//-       | example <br>
-//-       - n++
