@@ -109,7 +109,7 @@ class Custom {
 
       // Success
       if (res.code === 200) {
-         log.info('[200] Project was edited');
+         log.info('[200] Project view');
          return res;
       }
 
@@ -133,7 +133,7 @@ class Custom {
    }
 
 
-   async projectPatch(id, name, description, collaborators) {
+   async patchProject(id, data) {
       // -------------------------------------------------------------------------------------------
       // Developer mode
       // -------------------------------------------------------------------------------------------
@@ -152,11 +152,7 @@ class Custom {
 
       let res;
       try {
-         res = await connect.patchJSON(`/projects/${id}`, {
-            name,
-            description,
-            collaborators,
-         });
+         res = await connect.patchJSON(`/projects/${id}`, data);
       } catch (globalError) {
          throw globalError;
       }
@@ -174,9 +170,9 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorProject.ProjectDataError(
+         throw new errorConnect.InvalidDataError(
             res.hash, res.code, res.body,
-            'Project data are invalid or non-unique.',
+            'Project data are invalid.',
          );
       }
 
@@ -249,18 +245,6 @@ class Custom {
 
    async addCollaboratorToProject(id, username, role) {
       // -------------------------------------------------------------------------------------------
-      // Developer mode
-      // -------------------------------------------------------------------------------------------
-
-      if (localStorage.getItem('development') === 'true') {
-         // Mock response
-         const resMockData = mockData.addCollaboratorToProject;
-         const hash = randomstring.generate(32);
-         return new ResponseObject(`dev-${hash}`, 200, resMockData);
-      }
-
-
-      // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
 
@@ -293,7 +277,7 @@ class Custom {
 
       // Failures
       if (res.code === 400) {
-         throw new errorProject.ProjectCollabOrRoleError(
+         throw new errorConnect.InvalidDataError(
             res.hash, res.code, res.body,
             'Username or role is invalid',
          );
@@ -312,18 +296,6 @@ class Custom {
 
 
    async patchCollaboratorOfProject(id, username, role) {
-      // -------------------------------------------------------------------------------------------
-      // Developer mode
-      // -------------------------------------------------------------------------------------------
-
-      if (localStorage.getItem('development') === 'true') {
-         // Mock response
-         const resMockData = mockData.patchCollaboratorOfProject;
-         const hash = randomstring.generate(32);
-         return new ResponseObject(`dev-${hash}`, 200, resMockData);
-      }
-
-
       // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
@@ -370,18 +342,6 @@ class Custom {
 
 
    async deleteCollaboratorFromProject(id, username) {
-      // -------------------------------------------------------------------------------------------
-      // Developer mode
-      // -------------------------------------------------------------------------------------------
-
-      if (localStorage.getItem('development') === 'true') {
-         // Mock response
-         const resMockData = mockData.deleteCollaboratorFromProject;
-         const hash = randomstring.generate(32);
-         return new ResponseObject(`dev-${hash}`, 200, resMockData);
-      }
-
-
       // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
