@@ -28,11 +28,11 @@ class Index extends Page {
             // Multiple request
             await Promise.all([
                evodoc.getAPI().getProjects().projectView(this._args[1]),
-               evodoc.getAPI().getModules().getAllModules(this._args[1]),
+               // evodoc.getAPI().getModules().getAllModules(this._args[1]),
             ]).then((values) => {
                [
                   this._projectView,
-                  this._projectModules,
+                  // this._projectModules,
                ] = values;
             });
          },

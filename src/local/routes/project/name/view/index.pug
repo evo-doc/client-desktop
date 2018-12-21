@@ -5,7 +5,12 @@ h1 Collaborators
 
 //- TODO: Collaborators view
 .collaborators
-   if(project.collaborators.data.length> 0)
+   .collaborators__item(class="collaborators__item_owner")
+      .collaborators__avatar
+         img(src="https://www.gravatar.com/avatar/" + project.owner.emailhash + "?d=identicon&f=y&s=20`")
+      .collaborators__name #{project.owner.username} 
+
+   if(project.collaborators.data.length > 0)
       - var iCollabs = 0;
       while iCollabs < project.collaborators.data.length
          .collaborators__item(class="collaborators__item_" + project.collaborators.data[iCollabs][2])
@@ -14,28 +19,28 @@ h1 Collaborators
             .collaborators__name #{project.collaborators.data[iCollabs][0]}
 
          - iCollabs++;
-   else 
-      p No contributors. Impossible, at least an owner shoud be there.
 
 h1 Modules
+p We are sorry, this functionality isn't implemented yet.
+
 //- .search.search_big
 //-    label
 //-       span Modules
 //-       input(type="text", name="search" placeholder="Search")
 
 //- TODO: Modules view
-.list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/project/project-name-" + n + "/module/module-name/view")
-         .list__header
-            .list__header-left
-               .list__title= 'module-name-' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag label
-                  .tag label
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
-
-a.button(href="/project/" + projectId + "/modules/view") View all
+//- .list
+//-    - var n = 0;
+//-    while n < 4
+//-       a.list__item(href="/project/project-name-" + n + "/module/module-name/view")
+//-          .list__header
+//-             .list__header-left
+//-                .list__title= 'module-name-' + n++
+//-             .list__header-right
+//-                .list__labels.tags
+//-                   .tag label
+//-                   .tag label
+//-          .list__description
+//-             | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+//- 
+//- a.button(href="/project/" + projectId + "/modules/view") View all

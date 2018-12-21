@@ -1,22 +1,31 @@
 h1 Edit Project Name
 
-h2 Common information
+form#editPoject
+   h3 Name
+   input(placeholder="Project name" value=project.name)#name
 
-h3 Name
-input(placeholder="Project name")
+   h3 Description
+   textarea(placeholder="Project description")#description #{project.description}
 
-h3 Description
-textarea
+   input(type="submit", value="Save").button
 
-a.button(href="/") Save
+h3 Collaborators
 
-h2 Collaborators
 
 .collaborators
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
-   .collaborators__item username
 
-input(placeholder="username")
+   if(project.collaborators.data.length > 0)
+      - var iCollabs = 0;
+      while iCollabs < project.collaborators.data.length
+         .collaborators__item(class="collaborators__item_" + project.collaborators.data[iCollabs][2])
+            .collaborators__avatar
+               img(src="https://www.gravatar.com/avatar/" + project.collaborators.data[iCollabs][1] + "?d=identicon&f=y&s=20`")
+            .collaborators__name #{project.collaborators.data[iCollabs][0]}
+
+         - iCollabs++;
+   else
+      p This project doesn't have collaborators. You may add some.
+
+form#addCollab
+   input(placeholder="username")#collaborator
+   input(type="submit", value="Add a collaborator").button
