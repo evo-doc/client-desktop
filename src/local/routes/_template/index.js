@@ -69,7 +69,7 @@ class Index extends Page {
          (err) => {
             // Local error handling
             // -----------------------------------------------------------------
-            if (err instanceof Error) {
+            if (err instanceof errorConnect.InvalidDataError) {
                // Handle error
                new Noty({
                   text: 'Something went wrong.',
@@ -78,8 +78,10 @@ class Index extends Page {
                }).show();
                // Always throw an exception to show that error was handeled
                evodoc.getRouter().load('/error/404');
-               throw new errorConnect.PropagationCancel();
+               return;
             }
+
+            throw err;
          },
       );
    }
