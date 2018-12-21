@@ -190,18 +190,6 @@ class Custom {
 
    async projectDelete(id) {
       // -------------------------------------------------------------------------------------------
-      // Developer mode
-      // -------------------------------------------------------------------------------------------
-
-      if (localStorage.getItem('development') === 'true') {
-         // Mock response
-         const resMockData = mockData.projectDelete;
-         const hash = randomstring.generate(32);
-         return new ResponseObject(`dev-${hash}`, 200, resMockData);
-      }
-
-
-      // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
 
