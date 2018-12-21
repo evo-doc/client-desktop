@@ -12,7 +12,7 @@ form#editPoject
 h3 Collaborators
 
 
-.collaborators
+.collaborators.collaborators_remove
 
    if(project.collaborators.data.length > 0)
       - var iCollabs = 0;
@@ -29,3 +29,5 @@ h3 Collaborators
 form#addCollab
    input(placeholder="username")#collaborator
    input(type="submit", value="Add a collaborator").button
+
+input(type="submit", value="Remove project").button.button_red#removeProject

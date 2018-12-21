@@ -64,6 +64,12 @@ class Index extends Page {
          evt.preventDefault();
          this.editProject();
       });
+      document.querySelector('#removeProject').addEventListener('click', () => {
+         /* eslint no-alert: 0 */
+         if (window.confirm('Are you sure you want to delete this project?')) {
+            this.removeProject(this._args[1]);
+         }
+      });
       document.querySelector('#addCollab').addEventListener('submit', (evt) => {
          evt.preventDefault();
          this.addCollaborator();
@@ -131,6 +137,33 @@ class Index extends Page {
 
             throw err;
          },
+      );
+   }
+
+   /**
+    * @summary Remove project
+    */
+   async removeProject() {
+      // Wait for the response
+      await connect.ajaxRequest(
+         async () => {
+            // Request
+            // -----------------------------------------------------------------
+            // Signle request
+            await evodoc.getAPI().getProjects().projectDelete(
+               this._args[1],
+            );
+
+            new Noty({
+               text: 'Project deleted',
+               type: 'success',
+               timeout: 2000,
+            }).show();
+
+            evodoc.getRouter().load('/projects/view');
+         },
+
+         () => {},
       );
    }
 
