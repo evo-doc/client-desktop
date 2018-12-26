@@ -4,7 +4,7 @@ node_js:
 install:
    - yarn install
    - sudo apt update
-   - sudo apt install -y wine-stable
+   - sudo apt install -y wine
 cache:
    directories:
       - node_modules
