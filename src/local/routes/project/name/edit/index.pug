@@ -5,7 +5,7 @@ form#editPoject
    input(placeholder="Project name" value=project.name)#name
 
    h3 Description
-   textarea(placeholder="Project description")#description #{project.description}
+   textarea(placeholder="Project description" maxlength="300")#description #{project.description}
 
    input(type="submit", value="Save").button
 
