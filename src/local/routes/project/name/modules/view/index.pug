@@ -1,21 +1,32 @@
-h1 Name of the Project- Modules
-a.button(href="/projects/create") Create Module
+h1 #{project.name}
+//- .search.search_big
+//-    label
+//-       span Modules
+//-       input(type="text", name="search" placeholder="Search")
 
-.search.search_big
-   label
-      span Modules
-      input(type="text", name="search" placeholder="Search")
+
 
 .list
-   - var n = 0;
-   while n < 4
-      a.list__item(href="/project/project-name/module/module-name-" + n + "/view")
-         .list__header
-            .list__header-left
-               .list__title= 'module-name-' + n++
-            .list__header-right
-               .list__labels.tags
-                  .tag label
-                  .tag label
-         .list__description
-            | Grant roident est duis duis sit occaecat ea eiusmod laboris mollit ullamco mollit nisi.
+   if(modules.length === 0)
+      | You have no modules. Maybe you want to 
+      a(href="/project/" + projectId + "/modules/create") create
+      |
+      | some?
+   else
+      - var n = 0;
+      while n < modules.length
+         a.list__item(href="/project/" + projectId + "/module/" + modules[n].id + "/view")
+            .list__header
+               .list__header-left
+                  .list__title
+                     | #{modules[n].name}
+               .list__header-right
+                  //- .list__labels.tags
+                  //-    if(modules[n][1] === true)
+                  //-       .tag.tag_owner owner
+                  //-    else 
+                  //-       .tag.tag_access access
+
+            .list__description
+               | #{modules[n].description}
+         - n++

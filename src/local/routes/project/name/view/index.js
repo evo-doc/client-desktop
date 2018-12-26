@@ -18,6 +18,11 @@ class Index extends Page {
             icon: 'edit',
             name: 'Edit this project',
          },
+         {
+            link: `/project/${this._args[1]}/modules/create`,
+            icon: 'plus',
+            name: 'Create module',
+         },
       ];
    }
 
@@ -28,11 +33,11 @@ class Index extends Page {
             // Multiple request
             await Promise.all([
                evodoc.getAPI().getProjects().projectView(this._args[1]),
-               // evodoc.getAPI().getModules().getAllModules(this._args[1]),
+               evodoc.getAPI().getModules().getAllModules(this._args[1]),
             ]).then((values) => {
                [
                   this._projectView,
-                  // this._projectModules,
+                  this._projectModules,
                ] = values;
             });
          },
@@ -56,7 +61,7 @@ class Index extends Page {
       this._getRenderParent().innerHTML = this._template({
          project: this._projectView.body,
          projectId: this._args[1],
-         // modules: this._projectModules.body,
+         modules: this._projectModules.body,
       });
    }
 

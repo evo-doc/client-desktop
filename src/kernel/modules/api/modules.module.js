@@ -125,7 +125,7 @@ class Custom {
       // -------------------------------------------------------------------------------------------
       let res;
       try {
-         res = await connect.postJSON('/modules', data);
+         res = await connect.postJSON('/modules/module', data);
       } catch (globalError) {
          throw globalError;
       }
@@ -236,15 +236,13 @@ class Custom {
       );
    }
 
-   async exportModule(moduleId, extension) {
+   async buildModule(moduleId) {
       // -------------------------------------------------------------------------------------------
       // Production mode
       // -------------------------------------------------------------------------------------------
       let res;
       try {
-         res = await connect.postJSON(`/modules/${moduleId}/export`, {
-            extension,
-         });
+         res = await connect.getJSON(`/modules/build/${moduleId}`);
       } catch (globalError) {
          throw globalError;
       }
