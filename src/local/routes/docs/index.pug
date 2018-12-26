@@ -1,7 +1,69 @@
 h1 Documentation
 
-p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium quia quam molestias perspiciatis voluptate beatae. Possimus in quos consectetur error rerum voluptates iste aspernatur officiis, iusto molestiae facilis dolor enim aut nulla soluta. Minima ab odit ratione corporis deserunt assumenda molestiae voluptatibus animi soluta aliquid! Nemo, odit? Dignissimos temporibus dicta necessitatibus molestias quam eos, tempora beatae reiciendis architecto nihil, repellat blanditiis aliquid laboriosam, in saepe sunt maiores laborum reprehenderit natus pariatur! Fugit porro enim ab, beatae aliquid quidem perspiciatis tempora officiis molestiae odit qui hic maiores sit dolores quasi laudantium? Dicta, qui, quis amet velit dolorem porro sequi quibusdam quae officiis commodi cum mollitia suscipit delectus doloremque corrupti labore fuga. Ratione pariatur dolorem eos qui voluptas nemo enim sapiente impedit at, minus nisi aliquam inventore officiis, eligendi fuga magnam. Laudantium sit a iure mollitia minus optio sequi eius hic quis.
+p EvoDoc is an abbreviation for evolvable documents.The main idea of the project is to organise documents into smaller parts – modules that could be repeatedly used in many parts of many papers, e.g. a license in different manuals.
 
-.img.img_docs-1
+h1 Interface
 
-p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium quia quam molestias perspiciatis voluptate beatae. Possimus in quos consectetur error rerum voluptates iste aspernatur officiis, iusto molestiae facilis dolor enim aut nulla soluta. Minima ab odit ratione corporis deserunt assumenda molestiae voluptatibus animi soluta aliquid! Nemo, odit? Dignissimos temporibus dicta necessitatibus molestias quam eos, tempora beatae reiciendis architecto nihil, repellat blanditiis aliquid laboriosam, in saepe sunt maiores laborum reprehenderit natus pariatur! Fugit porro enim ab, beatae aliquid quidem perspiciatis tempora officiis molestiae odit qui hic maiores sit dolores quasi laudantium? Dicta, qui, quis amet velit dolorem porro sequi quibusdam quae officiis commodi cum mollitia suscipit delectus doloremque corrupti labore fuga. Ratione pariatur dolorem eos qui voluptas nemo enim sapiente impedit at, minus nisi aliquam inventore officiis, eligendi fuga magnam. Laudantium sit a iure mollitia minus optio sequi eius hic quis.
+.img.img_big.img_docs-interface
+
+p The EvoDoc interface has 3 main parts:
+ul 
+   li Primary navigation on the left - contains static menu (Dashboard, Projects, Documentation, etc.)
+   li Page - displays current page.
+   li Secondary navigation on the left - contains optional navigation elements e.g. Edit button at project page, etc.
+
+h1 Projects
+
+h2 Create
+.img.img_docs-project_create
+p You can create a new project at 
+   a(href="/projects/view") Projects
+   |
+   | page. Each project has a name and a description. If you are an owner of the project it is displayed as a tag in the top right corner.
+
+.img.img_docs-project_list
+
+h2 View
+.img.img_big.img_docs-project_view
+p At the project page are view the current state of the project - name, description, collaborators and a limited list of project modules.
+p A project owner has a green border in the collaboration list.
+p You can edit the project via "Edit project" button at the secondary menu on the right. 
+
+
+h1 Modules
+
+h2 Create
+p Each project can have modules. You can create a new one at Project page.
+.img.img_big.img_docs-module_create
+ul 
+   li Name - unique name per project
+   li Description - short description of the module
+   li Dependency
+      ul 
+         li Independent - text
+         li Package - based on some package (not implemented yet)
+   li Type - change it if you want to use markdown, HTML, etc. tags
+   li Text - module content
+
+
+h2 View & Export
+.img.img_big.img_docs-module_view
+
+p Modules may import another module, e.g.:
+code.
+   This module have another module inside - ";;;module-name;;;" is replaced by module-name content.
+
+p A result of an export:
+code This module have another module inside - "This module uses <b>BOLD</b> text." is replaced by module-name content.
+
+h1 FAQ
+p 
+   span.
+      <b>Q:</b> Can I help?
+   span.
+      <br>
+   span
+      | <b>A:</b> Yes, look at 
+      a(href="/about") About
+      | 
+      | page.

@@ -1,7 +1,34 @@
 .img {
+   background-size: contain;
+   background-position: center center;
+   background-color: var(--color-light-white);
+   border: 24px solid var(--color-light-white);
+   background-repeat: no-repeat;
+   min-height: 200px;
+}
+.img_big {
    min-height: 400px;
 }
-.img_docs-1 {
-   background: url('./img/docs.jpg') center center;
-   background-size: cover;
+.img_docs- {
+   &interface {
+      background-image: url('./img/interface.png');
+   }
+   &project_create {
+      background-image: url('./img/project_create.png');
+   }
+   &project_list {
+      background-image: url('./img/project_list.png');
+   }
+   &project_view {
+      background-image: url('./img/project_view.png');
+   }
+   &module_create {
+      background-image: url('./img/module_create.png');
+   }
+   &module_create {
+      background-image: url('./img/module_create.png');
+   }
+   &module_view {
+      background-image: url('./img/module_view.png');
+   }
 }

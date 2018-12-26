@@ -5,9 +5,11 @@
    font-size: 15px;
 }
 
-input {
+input,
+select {
    padding: 0 $g2;
    box-shadow: 0 0 0 1px var(--color-light-gray);
+   background-color: #fff;
    color: var(--color-dark-blue);
    border: 0;
    outline: 0;
@@ -35,8 +37,9 @@ textarea {
    border: 0;
    outline: 0;
    border-radius: $g05;
-   min-height: 200px;
+   min-height: 100px;
    font-size: 1rem;
    width: 100%;
    line-height: 1.4;
+   resize: vertical;
 }
