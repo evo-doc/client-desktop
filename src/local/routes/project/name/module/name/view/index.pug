@@ -1,4 +1,15 @@
 h1 #{module.name}
+h3 Description
+p #{module.description}
+
+.flex
+   .column
+      h3 Dependency
+      p #{module.dependency}
+
+   .column
+      h3 Type
+      p #{module.content.type}
 
 //- .tags
 //-    .tag Tags
@@ -7,6 +18,6 @@ h1 #{module.name}
 
 h3 Content
 
-p #{module.content.body}
+pre #{module.content.body}
 
-button().button#exportPdf.button_red Export module in PDF
+button().button#exportPdf.button_green Export module in PDF
