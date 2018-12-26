@@ -1,6 +1,10 @@
 // Stylesheet
 require('./index.scss');
 
+const { shell } = require('electron');
+
+const { host } = require('Configs/server.config.json');
+
 const Page = require('Kernel/Page.class');
 const connect = require('Modules/connect.module');
 const errorConnect = require('Modules/connect.error');
@@ -79,6 +83,8 @@ class Index extends Page {
     * @summary Create a new module and load it
     */
    async exportPdf() {
+      const token = evodoc._api._auth.getToken();
+      shell.openExternal(`${host}/modules/build/${this._args[2]}?token=${token}`);
       /*
       await connect.ajaxRequest(
          async () => {

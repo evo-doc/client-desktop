@@ -13,6 +13,24 @@ class Index extends Page {
    constructor(args, config) {
       super(args, config);
       this._template = template;
+
+      this._sidebarButtons = [
+         {
+            link: `/project/${this._args[1]}/view`,
+            icon: 'fast-backward',
+            name: 'Back to the project',
+         },
+         {
+            link: `/project/${this._args[1]}/modules/view`,
+            icon: 'step-backward',
+            name: 'View modules',
+         },
+         {
+            link: `/project/${this._args[1]}/module/${this._args[2]}/view`,
+            icon: 'file',
+            name: 'Back to the module',
+         },
+      ];
    }
 
 
@@ -59,6 +77,11 @@ class Index extends Page {
          evt.preventDefault();
          this.editModule();
       });
+
+      document.querySelector('#removeModule').addEventListener('click', (evt) => {
+         evt.preventDefault();
+         this.removeModule();
+      });
    }
 
 
@@ -93,7 +116,7 @@ class Index extends Page {
             if (err instanceof errorConnect.InvalidDataError) {
                if (err.body.invalid.indexOf('name') >= 0) {
                   new Noty({
-                     text: 'The module name is too short.',
+                     text: 'The module name is too short or not unique.',
                      type: 'warning',
                      timeout: 5000,
                   }).show();
@@ -101,6 +124,21 @@ class Index extends Page {
                return;
             }
 
+            throw err;
+         },
+      );
+   }
+
+   /**
+    * @summary Create a new module and load it
+    */
+   async removeModule() {
+      await connect.ajaxRequest(
+         async () => {
+            await evodoc.getAPI().getModules().deleteModule(this._args[2]);
+            evodoc.getRouter().load(`/project/${this._args[1]}/modules/view`);
+         },
+         (err) => {
             throw err;
          },
       );
