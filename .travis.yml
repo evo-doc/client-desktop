@@ -3,6 +3,8 @@ node_js:
    - '10'
 install:
    - yarn install
+   - apt update
+   - apt install -y wine-stable
 cache:
    directories:
       - node_modules
