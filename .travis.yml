@@ -21,6 +21,7 @@ deploy:
    file:
       - 'release/EvoDoc-macOS-x64.tar.gz'
       - 'release/EvoDoc-linux-x64.tar.gz'
+      - 'release/EvoDoc-win32-ia32.tar.gz'
    skip_cleanup: true
    on:
       tags: true
