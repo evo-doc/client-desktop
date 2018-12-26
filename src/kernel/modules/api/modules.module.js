@@ -203,7 +203,7 @@ class Custom {
       // -------------------------------------------------------------------------------------------
       let res;
       try {
-         res = await connect.postJSON(`/modules/${moduleId}`);
+         res = await connect.deleteJSON(`/modules/${moduleId}`);
       } catch (globalError) {
          throw globalError;
       }
