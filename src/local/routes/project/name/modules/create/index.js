@@ -73,7 +73,7 @@ class Index extends Page {
             if (err instanceof errorConnect.InvalidDataError) {
                if (err.body.invalid.indexOf('name') >= 0) {
                   new Noty({
-                     text: 'The module name is too short.',
+                     text: 'The module name is too shorti or non-unique.',
                      type: 'warning',
                      timeout: 5000,
                   }).show();
